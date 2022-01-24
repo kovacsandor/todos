@@ -5,18 +5,23 @@ import { Router } from 'src/component/Router';
 
 jest.mock('react-router-dom', () => ({
   BrowserRouter: ({ children }: BrowserRouterProps) => <>{children}</>,
-  Route: ({ children, element, path }: RouteProps) => (
+  Route: ({ children, element, path, index }: RouteProps) => (
     <div>
-      path is {path}$
+      path is {path || `empty`}$
       {element ? (
         <div>element is {element}</div>
       ) : (
         <div>route not configured</div>
       )}
       {children && <div>{children}</div>}
+      {index && <div>route is index</div>}
     </div>
   ),
-  Routes: ({ children }: RoutesProps) => <>{children}</>,
+  Routes: ({ children }: RoutesProps) => <div>routes{children}</div>,
+}));
+
+jest.mock('src/component/PageNotFound', () => ({
+  PageNotFound: () => <>Page Not Found</>,
 }));
 
 jest.mock('src/component/Redirect', () => ({
@@ -62,6 +67,40 @@ describe('Router', () => {
       const edit = within(todo).getByText(/path is edit\$/i);
       const path = within(edit).getByText(/path is :id\$/i);
       within(path).getByText(/element is edit task/i);
+    });
+  });
+
+  describe('page not found', () => {
+    test('route todos/ is configured', () => {
+      const root = screen.getByText(/path is \/\$/i);
+      const todos = within(root).getByText(/path is todos\$/i);
+      const path = within(todos).getByText(/path is empty\$/i);
+      within(path).getByText(/element is page not found/i);
+      within(path).getByText(/route is index/i);
+    });
+
+    test('route todo/ is configured', () => {
+      const root = screen.getByText(/path is \/\$/i);
+      const todo = within(root).getByText(/path is todo\$/i);
+      const paths = within(todo).getAllByText(/path is empty\$/i);
+      expect(paths).toHaveLength(2);
+      within(paths[1]).getByText(/element is page not found/i);
+      within(paths[1]).getByText(/route is index/i);
+    });
+
+    test('route todo/edit/ is configured', () => {
+      const root = screen.getByText(/path is \/\$/i);
+      const todo = within(root).getByText(/path is todo\$/i);
+      const edit = within(todo).getByText(/path is edit\$/i);
+      const path = within(edit).getByText(/path is empty\$/i);
+      within(path).getByText(/element is page not found/i);
+      within(path).getByText(/route is index/i);
+    });
+
+    test('route / is configured and is wildcard', () => {
+      const routes = screen.getByText(/routes/i);
+      const path = within(routes).getByText(/path is \*\$/i);
+      within(path).getByText(/element is page not found/i);
     });
   });
 
