@@ -1,5 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { BrowserRouterProps, RouteProps, RoutesProps } from 'react-router-dom';
+import { RedirectProps } from 'src/component/RedirectProps';
 import { Router } from 'src/component/Router';
 
 jest.mock('react-router-dom', () => ({
@@ -16,6 +17,16 @@ jest.mock('react-router-dom', () => ({
     </div>
   ),
   Routes: ({ children }: RoutesProps) => <>{children}</>,
+}));
+
+jest.mock('src/component/Redirect', () => ({
+  Redirect: ({ redirectFrom, redirectTo }: RedirectProps) => (
+    <>
+      redirect
+      <div>redirect from is {redirectFrom}$</div>
+      <div>redirect to is {redirectTo}</div>
+    </>
+  ),
 }));
 
 describe('Router', () => {
@@ -54,8 +65,14 @@ describe('Router', () => {
     });
   });
 
+  test('route / is redirected to todos/my-tasks', () => {
+    screen.getByText(/element is redirect/i);
+    screen.getByText(/redirect from is \/\$/i);
+    screen.getByText(/redirect to is todos\/my\-tasks/i);
+  });
+
   test('no unnecessary route is configured', () => {
     const elements = screen.getAllByText(/route not configured/i);
-    expect(elements).toHaveLength(4);
+    expect(elements).toHaveLength(3);
   });
 });

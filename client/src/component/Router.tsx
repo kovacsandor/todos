@@ -1,10 +1,16 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Redirect } from 'src/component/Redirect';
 
 export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/">
+        <Route
+          path="/"
+          element={
+            <Redirect redirectFrom={'/'} redirectTo={'todos/my-tasks'} />
+          }
+        >
           <Route path="todos">
             <Route path="my-tasks" element={'My tasks'} />
             <Route path="completed" element={'Completed'} />
