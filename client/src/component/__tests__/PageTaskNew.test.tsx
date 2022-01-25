@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { PageNotFound } from 'src/component/PageNotFound';
+import { PageTaskNew } from 'src/component/PageTaskNew';
 import { PageProps } from 'src/component/Page/PageProps';
 
 jest.mock('src/component/Page', () => ({
@@ -11,16 +11,16 @@ jest.mock('src/component/Page', () => ({
   ),
 }));
 
-describe('PageNotFound', () => {
+describe('PageTaskNew', () => {
   beforeEach(() => {
-    render(<PageNotFound />);
+    render(<PageTaskNew />);
   });
 
   test('header is configured correctly', () => {
-    screen.getAllByText(/page title is page not found/i);
+    screen.getAllByText(/page title is add new/i);
   });
 
   test('children are rendered', () => {
-    screen.getAllByText(/PageNotFound/i);
+    screen.getAllByText(/PageTaskNew/i);
   });
 });

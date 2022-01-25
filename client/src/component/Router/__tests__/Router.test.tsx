@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react';
 import { BrowserRouterProps, RouteProps, RoutesProps } from 'react-router-dom';
-import { RedirectProps } from 'src/component/RedirectProps';
+import { RedirectProps } from 'src/component/Router/RedirectProps';
 import { Router } from 'src/component/Router';
 
 jest.mock('react-router-dom', () => ({
@@ -20,11 +20,27 @@ jest.mock('react-router-dom', () => ({
   Routes: ({ children }: RoutesProps) => <div>routes{children}</div>,
 }));
 
+jest.mock('src/component/PageCompleted', () => ({
+  PageCompleted: () => <>Page completed</>,
+}));
+
+jest.mock('src/component/PageMyTasks', () => ({
+  PageMyTasks: () => <>Page my tasks</>,
+}));
+
 jest.mock('src/component/PageNotFound', () => ({
   PageNotFound: () => <>Page Not Found</>,
 }));
 
-jest.mock('src/component/Redirect', () => ({
+jest.mock('src/component/PageTaskEdit', () => ({
+  PageTaskEdit: () => <>Page edit task</>,
+}));
+
+jest.mock('src/component/PageTaskNew', () => ({
+  PageTaskNew: () => <>Page add new task</>,
+}));
+
+jest.mock('src/component/Router/Redirect', () => ({
   Redirect: ({ redirectFrom, redirectTo }: RedirectProps) => (
     <>
       redirect
@@ -44,21 +60,21 @@ describe('Router', () => {
       const root = screen.getByText(/path is \/\$/i);
       const todos = within(root).getByText(/path is todos\$/i);
       const path = within(todos).getByText(/path is my-tasks\$/i);
-      within(path).getByText(/element is my tasks/i);
+      within(path).getByText(/element is page my tasks/i);
     });
 
     test('todos/completed', () => {
       const root = screen.getByText(/path is \/\$/i);
       const todos = within(root).getByText(/path is todos\$/i);
       const path = within(todos).getByText(/path is completed\$/i);
-      within(path).getByText(/element is completed/i);
+      within(path).getByText(/element is page completed/i);
     });
 
     test('todo/new', () => {
       const root = screen.getByText(/path is \/\$/i);
       const todo = within(root).getByText(/path is todo\$/i);
       const path = within(todo).getByText(/path is new\$/i);
-      within(path).getByText(/element is add new task/i);
+      within(path).getByText(/element is page add new task/i);
     });
 
     test('todo/edit/:id', () => {
@@ -66,7 +82,7 @@ describe('Router', () => {
       const todo = within(root).getByText(/path is todo\$/i);
       const edit = within(todo).getByText(/path is edit\$/i);
       const path = within(edit).getByText(/path is :id\$/i);
-      within(path).getByText(/element is edit task/i);
+      within(path).getByText(/element is page edit task/i);
     });
   });
 

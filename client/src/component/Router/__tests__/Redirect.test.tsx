@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Redirect } from 'src/component/Redirect';
+import { Redirect } from 'src/component/Router/Redirect';
 
 const mockNavigate = jest.fn();
 

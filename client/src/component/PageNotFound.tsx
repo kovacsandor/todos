@@ -1,3 +1,5 @@
+import { Page } from 'src/component/Page';
+
 export function PageNotFound(): JSX.Element {
-  return <>Page not found</>;
+  return <Page title="Page not found">PageNotFound</Page>;
 }
