@@ -14,7 +14,7 @@ jest.mock('@mui/icons-material/Restore', () => () => 'restore icon');
 jest.mock(
   '@mui/material/BottomNavigation',
   () =>
-    ({ children, onChange, showLabels }: BottomNavigationProps) => {
+    ({ children, onChange, showLabels, value }: BottomNavigationProps) => {
       const onClick = (index: number) => {
         return (
           event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -27,6 +27,7 @@ jest.mock(
         <div>
           Bottom Navigation
           {showLabels && <div>show Labels</div>}
+          <div>value is {value}</div>
           {mockReact.Children.map(
             children,
             (child, index) =>
@@ -70,6 +71,10 @@ jest.mock('src/component/Page/useGetRoute', () => ({
   useGetRoute: () => (value: number) => value,
 }));
 
+jest.mock('src/component/Page/useNavigationValue', () => ({
+  useNavigationValue: () => 'navigation value',
+}));
+
 describe('Footer', () => {
   beforeEach(() => {
     render(<Footer />);
@@ -91,6 +96,7 @@ describe('Footer', () => {
     });
 
     test('bottom navigation is correct', () => {
+      screen.getByText(/value is navigation value/i);
       screen.getByText(/show labels/i);
     });
 

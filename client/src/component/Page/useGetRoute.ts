@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 export function useGetRoute() {
-  return useCallback((value: number): string => {
+  const getRoute = useCallback((value: number): string => {
     switch (value) {
       case 0:
         return '/todos/my-tasks';
@@ -13,4 +13,6 @@ export function useGetRoute() {
         throw new Error('Invalid case');
     }
   }, []);
+
+  return getRoute;
 }

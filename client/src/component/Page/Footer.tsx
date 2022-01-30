@@ -7,10 +7,12 @@ import Paper from '@mui/material/Paper';
 import { BaseSyntheticEvent, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGetRoute } from 'src/component/Page/useGetRoute';
+import { useNavigationValue } from 'src/component/Page/useNavigationValue';
 
 export function Footer() {
   const navigate = useNavigate();
   const getRoute = useGetRoute();
+  const value = useNavigationValue();
 
   const onChange = useCallback(
     (event: BaseSyntheticEvent, newValue: number): void => {
@@ -22,10 +24,10 @@ export function Footer() {
 
   return (
     <Paper
-      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 2 }}
       elevation={3}
+      sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 2 }}
     >
-      <BottomNavigation showLabels onChange={onChange}>
+      <BottomNavigation value={value} onChange={onChange} showLabels>
         <BottomNavigationAction label="My tasks" icon={<RestoreIcon />} />
         <BottomNavigationAction label="Add new" icon={<AddIcon />} />
         <BottomNavigationAction label="Completed" icon={<CheckIcon />} />
