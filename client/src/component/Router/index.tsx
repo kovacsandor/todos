@@ -13,7 +13,7 @@ export function Router() {
         <Route
           path="/"
           element={
-            <Redirect redirectFrom={'/'} redirectTo={'todos/my-tasks'} />
+            <Redirect redirectFrom={'/'} redirectTo={'/todos/my-tasks'} />
           }
         >
           <Route path="todos">

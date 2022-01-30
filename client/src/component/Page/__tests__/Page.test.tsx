@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { HeaderProps } from 'src/component/Page/HeaderProps';
 import { Page } from 'src/component/Page';
+import { HeaderProps } from 'src/component/Page/HeaderProps';
+
+jest.mock('src/component/Page/Footer', () => ({
+  Footer: () => <div>footer</div>,
+}));
 
 jest.mock('src/component/Page/Header', () => ({
-  Header: ({ title }: HeaderProps) => (
-    <div>
-      <div>header title is {title}</div>
-    </div>
-  ),
+  Header: ({ title }: HeaderProps) => <div>header title is {title}</div>,
 }));
 
 describe('Page', () => {
@@ -16,6 +16,10 @@ describe('Page', () => {
 
   beforeEach(() => {
     render(<Page title={pageTitle}>{pageChildren}</Page>);
+  });
+
+  test('footer is present', () => {
+    screen.getAllByText(/footer/i);
   });
 
   test('header is configured correctly', () => {

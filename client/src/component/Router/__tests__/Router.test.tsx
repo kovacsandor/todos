@@ -1,7 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import { BrowserRouterProps, RouteProps, RoutesProps } from 'react-router-dom';
-import { RedirectProps } from 'src/component/Router/RedirectProps';
 import { Router } from 'src/component/Router';
+import { RedirectProps } from 'src/component/Router/RedirectProps';
 
 jest.mock('react-router-dom', () => ({
   BrowserRouter: ({ children }: BrowserRouterProps) => <>{children}</>,
@@ -123,7 +123,7 @@ describe('Router', () => {
   test('route / is redirected to todos/my-tasks', () => {
     screen.getByText(/element is redirect/i);
     screen.getByText(/redirect from is \/\$/i);
-    screen.getByText(/redirect to is todos\/my\-tasks/i);
+    screen.getByText(/redirect to is \/todos\/my\-tasks/i);
   });
 
   test('no unnecessary route is configured', () => {
