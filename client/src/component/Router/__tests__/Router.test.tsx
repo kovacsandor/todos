@@ -1,18 +1,13 @@
 import { render, screen, within } from '@testing-library/react';
 import { BrowserRouterProps, RouteProps, RoutesProps } from 'react-router-dom';
 import { Router } from 'src/component/Router';
-import { RedirectProps } from 'src/component/Router/RedirectProps';
+import { IRedirectProps } from 'src/component/Router/IRedirectProps';
 
 jest.mock('react-router-dom', () => ({
   BrowserRouter: ({ children }: BrowserRouterProps) => <>{children}</>,
   Route: ({ children, element, path, index }: RouteProps) => (
     <div>
-      path is {path || `empty`}$
-      {element ? (
-        <div>element is {element}</div>
-      ) : (
-        <div>route not configured</div>
-      )}
+      path is {path || `empty`}${element ? <div>element is {element}</div> : <div>route not configured</div>}
       {children && <div>{children}</div>}
       {index && <div>route is index</div>}
     </div>
@@ -41,7 +36,7 @@ jest.mock('src/component/PageTaskNew', () => ({
 }));
 
 jest.mock('src/component/Router/Redirect', () => ({
-  Redirect: ({ redirectFrom, redirectTo }: RedirectProps) => (
+  Redirect: ({ redirectFrom, redirectTo }: IRedirectProps) => (
     <>
       redirect
       <div>redirect from is {redirectFrom}$</div>

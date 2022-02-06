@@ -1,17 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { RedirectProps } from 'src/component/Router/RedirectProps';
+import { IRedirectProps } from 'src/component/Router/IRedirectProps';
 
-export function Redirect({
-  redirectFrom,
-  redirectTo,
-}: RedirectProps): JSX.Element {
+export function Redirect({ redirectFrom, redirectTo }: IRedirectProps): JSX.Element {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const shouldRedirect = useMemo(
-    () => pathname === redirectFrom,
-    [pathname, redirectFrom],
-  );
+  const shouldRedirect = useMemo(() => pathname === redirectFrom, [pathname, redirectFrom]);
 
   useEffect((): void => {
     if (shouldRedirect) {

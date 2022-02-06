@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { Page } from 'src/component/Page';
-import { HeaderProps } from 'src/component/Page/HeaderProps';
+import { IHeaderProps } from 'src/component/Page/IHeaderProps';
 
 jest.mock('src/component/Page/Footer', () => ({
   Footer: () => <div>footer</div>,
 }));
 
 jest.mock('src/component/Page/Header', () => ({
-  Header: ({ title }: HeaderProps) => <div>header title is {title}</div>,
+  Header: ({ title }: IHeaderProps) => <div>header title is {title}</div>,
 }));
 
 describe('Page', () => {

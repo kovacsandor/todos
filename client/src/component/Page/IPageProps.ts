@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export interface PageProps {
+export interface IPageProps {
   readonly children: ReactNode;
   readonly title: string;
 }
