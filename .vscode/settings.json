@@ -4,5 +4,8 @@
         "flexgrow",
         "overridable",
         "todos"
+    ],
+    "editor.rulers": [
+        120
     ]
 }
