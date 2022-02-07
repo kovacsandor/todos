@@ -49,5 +49,11 @@
   },
   "devDependencies": {
     "@testing-library/react-hooks": "^7.0.2"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "src/index.ts",
+      "src/reportWebVitals.ts"
+    ]
   }
 }

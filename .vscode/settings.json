@@ -5,7 +5,13 @@
         "overridable",
         "todos"
     ],
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.formatOnSave": true,
     "editor.rulers": [
         120
-    ]
+    ],
+    "typescript.preferences.importModuleSpecifier": "non-relative",
+    "typescript.preferences.quoteStyle": "single"
 }
