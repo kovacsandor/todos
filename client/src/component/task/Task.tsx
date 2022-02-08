@@ -1,14 +1,10 @@
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import moment from 'moment';
+import { ITaskProps } from 'src/component/task/ITaskProps';
 import { TaskAvatar } from 'src/component/task/TaskAvatar';
-import { ITask } from 'src/type';
 
-interface IProps {
-  readonly task: Omit<ITask, 'createdOn' | 'id' | 'status'>;
-}
-
-export function Task({ task }: IProps): JSX.Element {
+export function Task({ task }: ITaskProps): JSX.Element {
   const dueDate = moment(task.dueDate).format('LL');
   return (
     <ListItem disablePadding>
