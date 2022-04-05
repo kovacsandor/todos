@@ -1,12 +1,27 @@
+import { LoadingButtonProps } from '@mui/lab';
 import { StackProps } from '@mui/material/Stack';
 import { render, screen, within } from '@testing-library/react';
+import { useQuery } from 'react-query';
 import { IPageProps } from 'src/component/page-frame/IPageProps';
 import { ITaskListProps } from 'src/component/task-list/ITaskListProps';
 import { MyTasks } from 'src/page';
+import { QueryKey } from 'src/type/QueryKey';
 
 const mockTask = { id: 'mockTaskId' };
 const mockTasks = [mockTask];
-const mockUseTasks = jest.fn<typeof mockTasks, []>();
+const mockUseQuery = jest.fn();
+const mockFetchMyTasks = jest.fn();
+
+type QueryKeyType = Parameters<typeof useQuery>['0'];
+
+jest.mock('@mui/lab/LoadingButton', () => ({ loading }: LoadingButtonProps) => (
+  <div>
+    LoadingButton
+    <div>{loading && 'loading is true'}</div>
+  </div>
+));
+
+jest.mock('@mui/material/Divider', () => () => <div>Divider</div>);
 
 jest.mock('@mui/material/Stack', () => ({ children, mb, spacing }: StackProps) => (
   <div>
@@ -16,6 +31,13 @@ jest.mock('@mui/material/Stack', () => ({ children, mb, spacing }: StackProps) =
     <div>{children}</div>
   </div>
 ));
+
+jest.mock('react-query', () => ({
+  useQuery: (queryKey: QueryKeyType, queryFn: () => void) => {
+    queryFn();
+    return mockUseQuery(queryKey, queryFn);
+  },
+}));
 
 jest.mock('src/component', () => ({
   NoTasksFound: () => <div>NoTasksFound</div>,
@@ -34,12 +56,30 @@ jest.mock('src/component', () => ({
   ),
 }));
 
-jest.mock('src/page/my-tasks/useTasks', () => ({ useTasks: () => mockUseTasks() }));
+jest.mock('src/page/my-tasks/fetchMyTasks', () => ({ fetchMyTasks: (from: number) => mockFetchMyTasks(from) }));
 
 describe('MyTasks', () => {
+  describe('endpoint', () => {
+    beforeEach(() => {
+      mockUseQuery.mockReturnValueOnce({
+        isSuccess: true,
+        data: mockTasks,
+      });
+      render(<MyTasks />);
+    });
+
+    test('configuration is correct', () => {
+      expect(mockUseQuery).toBeCalledWith(QueryKey.MyTasks, expect.any(Function));
+      expect(mockFetchMyTasks).toBeCalledWith(0);
+    });
+  });
+
   describe('layout is correct', () => {
     beforeEach(() => {
-      mockUseTasks.mockReturnValueOnce(mockTasks);
+      mockUseQuery.mockReturnValueOnce({
+        isSuccess: true,
+        data: mockTasks,
+      });
       render(<MyTasks />);
     });
 
@@ -60,7 +100,10 @@ describe('MyTasks', () => {
 
   describe('there is at least one task', () => {
     beforeEach(() => {
-      mockUseTasks.mockReturnValueOnce(mockTasks);
+      mockUseQuery.mockReturnValueOnce({
+        isSuccess: true,
+        data: mockTasks,
+      });
       render(<MyTasks />);
     });
 
@@ -76,13 +119,31 @@ describe('MyTasks', () => {
 
   describe('there are no tasks', () => {
     beforeEach(() => {
-      mockUseTasks.mockReturnValueOnce([]);
+      mockUseQuery.mockReturnValueOnce({
+        isSuccess: true,
+        data: [],
+      });
       render(<MyTasks />);
     });
 
     test('header is configured correctly', () => {
       const stack = screen.getByText(/stack/i);
       within(stack).getByText(/NoTasksFound/i);
+    });
+  });
+
+  describe('tasks are being fetched', () => {
+    beforeEach(() => {
+      mockUseQuery.mockReturnValueOnce({
+        isLoading: true,
+      });
+      render(<MyTasks />);
+    });
+
+    test('progress indicator is visible', () => {
+      const stack = screen.getByText(/stack/i);
+      const button = within(stack).getByText(/LoadingButton/i);
+      within(button).getByText(/loading is true/i);
     });
   });
 });
