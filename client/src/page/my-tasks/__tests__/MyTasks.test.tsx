@@ -1,4 +1,5 @@
 import { LoadingButtonProps } from '@mui/lab';
+import { TypographyProps } from '@mui/material';
 import { StackProps } from '@mui/material/Stack';
 import { render, screen, within } from '@testing-library/react';
 import { useQuery } from 'react-query';
@@ -31,6 +32,22 @@ jest.mock('@mui/material/Stack', () => ({ children, mb, spacing }: StackProps) =
     <div>{children}</div>
   </div>
 ));
+
+jest.mock('@mui/material/Typography', () => ({ children, color, variant, textAlign }: TypographyProps) => (
+  <div>
+    Typography
+    <div>color is {color}</div>
+    <div>variant is {variant}</div>
+    <div>textAlign is {textAlign}</div>
+    <div>{children}</div>
+  </div>
+));
+
+jest.mock('@mui/material/colors', () => ({
+  red: {
+    700: '700',
+  },
+}));
 
 jest.mock('react-query', () => ({
   useQuery: (queryKey: QueryKeyType, queryFn: () => void) => {
@@ -144,6 +161,24 @@ describe('MyTasks', () => {
       const stack = screen.getByText(/stack/i);
       const button = within(stack).getByText(/LoadingButton/i);
       within(button).getByText(/loading is true/i);
+    });
+  });
+
+  describe('failed to load tasks', () => {
+    beforeEach(() => {
+      mockUseQuery.mockReturnValueOnce({
+        isError: true,
+      });
+      render(<MyTasks />);
+    });
+
+    test('error message is visible', () => {
+      const stack = screen.getByText(/stack/i);
+      const typography = within(stack).getByText(/typography/i);
+      within(typography).getByText(/Failed to load tasks/i);
+      within(typography).getByText(/color is 700/i);
+      within(typography).getByText(/variant is overline/i);
+      within(typography).getByText(/textalign is center/i);
     });
   });
 });

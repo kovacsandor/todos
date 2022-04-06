@@ -1,6 +1,8 @@
 import LoadingButton from '@mui/lab/LoadingButton';
+import { red } from '@mui/material/colors';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 import { useQuery } from 'react-query';
 import { NoTasksFound, PageFrame, TaskList } from 'src/component';
 import { fetchMyTasks } from 'src/page/my-tasks/fetchMyTasks';
@@ -18,6 +20,14 @@ export function MyTasks(): JSX.Element {
           <>
             <Divider />
             <LoadingButton loading />
+          </>
+        )}
+        {queryResult.isError && (
+          <>
+            <Divider />
+            <Typography color={red[700]} variant='overline' textAlign={'center'}>
+              Failed to load tasks
+            </Typography>
           </>
         )}
       </Stack>
