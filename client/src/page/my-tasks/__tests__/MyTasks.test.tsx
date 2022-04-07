@@ -1,7 +1,7 @@
 import { LoadingButtonProps } from '@mui/lab';
 import { TypographyProps } from '@mui/material';
 import { StackProps } from '@mui/material/Stack';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { useQuery } from 'react-query';
 import { IPageProps } from 'src/component/page-frame/IPageProps';
 import { ITaskListProps } from 'src/component/task-list/ITaskListProps';
@@ -10,15 +10,17 @@ import { QueryKey } from 'src/type/QueryKey';
 
 const mockTask = { id: 'mockTaskId' };
 const mockTasks = [mockTask];
+const mockRefetch = jest.fn();
 const mockUseQuery = jest.fn();
 const mockFetchMyTasks = jest.fn();
 
 type QueryKeyType = Parameters<typeof useQuery>['0'];
 
-jest.mock('@mui/lab/LoadingButton', () => ({ loading }: LoadingButtonProps) => (
+jest.mock('@mui/lab/LoadingButton', () => ({ children, loading, onClick }: LoadingButtonProps) => (
   <div>
     LoadingButton
     <div>{loading && 'loading is true'}</div>
+    <button onClick={onClick}>{children}</button>
   </div>
 ));
 
@@ -179,6 +181,22 @@ describe('MyTasks', () => {
       within(typography).getByText(/color is 700/i);
       within(typography).getByText(/variant is overline/i);
       within(typography).getByText(/textalign is center/i);
+    });
+  });
+
+  describe('user can refetch', () => {
+    beforeEach(() => {
+      mockUseQuery.mockReturnValueOnce({
+        isError: true,
+        refetch: mockRefetch,
+      });
+      render(<MyTasks />);
+    });
+
+    test('try again button is visible and calls refetch', () => {
+      const button = screen.getByText(/try again/i);
+      fireEvent.click(button);
+      expect(mockRefetch).toBeCalled();
     });
   });
 });
