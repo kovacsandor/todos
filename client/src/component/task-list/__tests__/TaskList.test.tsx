@@ -1,7 +1,7 @@
 import { ListProps } from '@mui/material/List';
 import { render, screen, within } from '@testing-library/react';
 import { TaskList } from 'src/component/task-list';
-import { ITaskProps } from 'src/component/task/ITaskProps';
+import { ITaskListItemProps } from 'src/component/task-list/ITaskListItemProps';
 import { ITask } from 'src/type';
 
 jest.mock('@mui/material/List', () => ({ children }: ListProps) => (
@@ -11,11 +11,12 @@ jest.mock('@mui/material/List', () => ({ children }: ListProps) => (
   </div>
 ));
 
-jest.mock('src/component', () => ({
-  Task: ({ task }: ITaskProps) => (
+jest.mock('src/component/task-list/TaskListItem', () => ({
+  TaskListItem: ({ curr, prev }: ITaskListItemProps) => (
     <div>
-      Task
-      <div>summary is {task.summary}</div>
+      TaskListItem {curr.id}
+      <div>curr is {curr.summary}</div>
+      {prev && <div>prev is {prev.summary}</div>}
     </div>
   ),
 }));
@@ -24,9 +25,16 @@ describe('TaskList', () => {
   const tasks: readonly Omit<ITask, 'createdOn'>[] = [
     {
       dueDate: 123456,
-      id: 'id',
+      id: 'id1',
       status: 'todo',
-      summary: 'summary',
+      summary: 'summary1',
+      type: 'private',
+    },
+    {
+      dueDate: 123456,
+      id: 'id2',
+      status: 'todo',
+      summary: 'summary2',
       type: 'private',
     },
   ];
@@ -36,11 +44,20 @@ describe('TaskList', () => {
   });
 
   test('page structure is correct', () => {
-    const list = screen.getByText(/list/i);
-    within(list).getByText(/^task$/i);
+    const list = screen.getByText(/^list$/i);
+    within(list).getByText(/TaskListItem id1/i);
+    within(list).getByText(/TaskListItem id2/i);
   });
 
-  test('task is configured correctly', () => {
-    screen.getByText(/summary is summary/i);
+  test('first task is configured correctly', () => {
+    const item = screen.getByText(/TaskListItem id1/i);
+    within(item).getByText(/curr is summary1/i);
+    expect(within(item).queryByText(/prev is/i)).not.toBeInTheDocument();
+  });
+
+  test('second task is configured correctly', () => {
+    const item = screen.getByText(/TaskListItem id2/i);
+    within(item).getByText(/curr is summary2/i);
+    within(item).getByText(/prev is summary1/i);
   });
 });
