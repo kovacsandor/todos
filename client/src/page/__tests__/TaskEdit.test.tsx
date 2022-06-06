@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { IPageProps } from 'src/component/page-frame/IPageProps';
-import { TaskEdit } from 'src/page';
+import { TaskEdit } from 'src/page/TaskEdit';
 
 jest.mock('src/component', () => ({
   PageFrame: ({ children, title }: IPageProps) => (

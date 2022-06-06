@@ -1,6 +1,6 @@
 import { ListItemProps, ListItemTextProps } from '@mui/material';
 import { render, screen, within } from '@testing-library/react';
-import { Task } from 'src/component';
+import { Task } from 'src/component/task';
 import { ITaskAvatarProps } from 'src/component/task/ITaskAvatarProps';
 import { ITask } from 'src/type/ITask';
 

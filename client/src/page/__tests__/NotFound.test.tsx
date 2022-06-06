@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { IPageProps } from 'src/component/page-frame/IPageProps';
-import { NotFound } from 'src/page';
+import { NotFound } from 'src/page/NotFound';
 
 jest.mock('src/component', () => ({
   PageFrame: ({ children, title }: IPageProps) => (
