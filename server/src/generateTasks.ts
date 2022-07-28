@@ -18,7 +18,7 @@ export const generateTasks = () => {
       return {
         createdOn,
         dueDate,
-        id: faker.datatype.uuid(),
+        id: faker.database.mongodbObjectId(),
         status: Math.random() > 0.5 ? 'completed' : 'todo',
         summary: faker.hacker.phrase().replace(/!/i, ''),
         type: Math.random() > 0.5 ? 'private' : 'work',

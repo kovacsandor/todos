@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { Location } from 'react-router-dom';
 import { useNavigationValue } from 'src/component/page-frame/useNavigationValue';
 

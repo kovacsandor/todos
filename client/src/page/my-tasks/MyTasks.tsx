@@ -1,8 +1,8 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { useCallback, useMemo } from 'react';
-import { useInfiniteQuery } from 'react-query';
 import { PageFrame, TaskList } from 'src/component';
 import { TaskListMessage } from 'src/component/task-list-message';
 import { fetchMyTasks } from 'src/page/my-tasks/fetchMyTasks';
@@ -14,7 +14,7 @@ export function MyTasks(): JSX.Element {
   const pageSize = 10;
 
   const { data, fetchNextPage, hasNextPage, isError, isFetchingNextPage, isLoading, isRefetching, isSuccess, refetch } =
-    useInfiniteQuery(QueryKey.MyTasks, ({ pageParam }) => fetchMyTasks(pageParam || 0 * pageSize), {
+    useInfiniteQuery([QueryKey.MyTasks], ({ pageParam }) => fetchMyTasks((pageParam || 0) * pageSize), {
       getNextPageParam: getNextPageParam(pageSize),
     });
 
@@ -53,7 +53,7 @@ export function MyTasks(): JSX.Element {
 
       refetch();
     },
-    [fetchNextPage, refetch],
+    [fetchNextPage, refetch, data],
   );
 
   const tasks = useMemo((): Omit<ITask, 'createdOn'>[] => data?.pages.flat() || [], [data]);

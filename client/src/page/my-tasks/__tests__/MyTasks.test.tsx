@@ -1,7 +1,7 @@
 import { LoadingButtonProps } from '@mui/lab';
 import { StackProps } from '@mui/material/Stack';
+import { useInfiniteQuery, UseInfiniteQueryOptions } from '@tanstack/react-query';
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { QueryOptions, useQuery } from 'react-query';
 import { IPageProps } from 'src/component/page-frame/IPageProps';
 import { ITaskListMessageProps } from 'src/component/task-list-message/ITaskListMessageProps';
 import { ITaskListProps } from 'src/component/task-list/ITaskListProps';
@@ -16,7 +16,7 @@ const mockTask = { id: 'mockTaskId' };
 const mockTasks = [mockTask];
 const mockUseInfiniteQuery = jest.fn();
 
-type QueryKeyType = Parameters<typeof useQuery>['0'];
+type QueryKeyType = Parameters<typeof useInfiniteQuery>['0'];
 
 jest.mock('@mui/lab/LoadingButton', () => ({ children, loading, onClick }: LoadingButtonProps) => (
   <div>
@@ -47,11 +47,11 @@ jest.mock('src/component/task-list-message', () => ({
   ),
 }));
 
-jest.mock('react-query', () => ({
+jest.mock('@tanstack/react-query', () => ({
   useInfiniteQuery: (
     queryKey: QueryKeyType,
     queryFn: (context: { readonly pageParam: number }) => void,
-    options: QueryOptions,
+    options: UseInfiniteQueryOptions,
   ) => {
     queryFn({ pageParam: 0 });
     return mockUseInfiniteQuery(queryKey, queryFn, options);
@@ -137,7 +137,7 @@ describe('MyTasks', () => {
     });
 
     test('configuration is correct', () => {
-      expect(mockUseInfiniteQuery).toBeCalledWith(QueryKey.MyTasks, expect.any(Function), {
+      expect(mockUseInfiniteQuery).toBeCalledWith([QueryKey.MyTasks], expect.any(Function), {
         getNextPageParam: expect.any(Function),
       });
       expect(mockGetNextPageParam).toBeCalledWith(10);

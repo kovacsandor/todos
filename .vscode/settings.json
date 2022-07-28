@@ -3,6 +3,7 @@
         "browserslist",
         "flexgrow",
         "overridable",
+        "tanstack",
         "todos"
     ],
     "editor.codeActionsOnSave": {

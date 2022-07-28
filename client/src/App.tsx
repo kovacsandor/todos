@@ -1,5 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ErrorBoundary } from 'src/component';
 import { Router } from 'src/router';
 
@@ -14,6 +15,7 @@ export function App() {
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
         <Router />
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ErrorBoundary>
   );
