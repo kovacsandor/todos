@@ -1,12 +1,12 @@
 import { faker } from '@faker-js/faker';
-import { ITask } from './ITask';
+import { Task, User } from 'todos-shared';
 
-export const generateTasks = () => {
+export const generateTasks = (users: readonly User[]): readonly Task[] => {
   const count = Math.floor(Math.random() * 100);
   console.log(`Generating ${count} todo${count === 1 ? '' : 's'}...`);
   return Array(count)
     .fill(null)
-    .map((): ITask => {
+    .map((): Task => {
       const now = Date.now();
       const year = 1 * 365 * 24 * 60 * 60 * 1000;
       const dueDateFrom = new Date(now - year).toString();
@@ -19,10 +19,11 @@ export const generateTasks = () => {
         createdOn,
         dueDate,
         id: faker.database.mongodbObjectId(),
+        owner: users[Math.floor(Math.random() * users.length)].id,
         status: Math.random() > 0.5 ? 'completed' : 'todo',
         summary: faker.hacker.phrase().replace(/!/i, ''),
         type: Math.random() > 0.5 ? 'private' : 'work',
       };
     })
-    .sort((a: ITask, b: ITask) => a.createdOn - b.createdOn);
+    .sort((a: Task, b: Task) => a.createdOn - b.createdOn);
 };

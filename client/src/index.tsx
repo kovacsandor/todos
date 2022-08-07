@@ -1,7 +1,10 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { App } from 'src/App';
-import reportWebVitals from './reportWebVitals';
+import { Authorized } from 'src/component';
+import { store } from 'src/redux';
+import reportWebVitals from 'src/reportWebVitals';
 
 const container = document.getElementById('root');
 
@@ -9,7 +12,11 @@ if (container) {
   const root = createRoot(container);
   root.render(
     <StrictMode>
-      <App />
+      <Provider store={store}>
+        <Authorized>
+          <App />
+        </Authorized>
+      </Provider>
     </StrictMode>,
   );
 }

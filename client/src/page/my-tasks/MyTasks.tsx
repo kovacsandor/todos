@@ -1,14 +1,14 @@
 import LoadingButton from '@mui/lab/LoadingButton';
 import Divider from '@mui/material/Divider';
-import Stack from '@mui/material/Stack';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import React, { useCallback, useMemo } from 'react';
 import { PageFrame, TaskList } from 'src/component';
+import { ProtectedResource } from 'src/component/protected-resource';
 import { TaskListMessage } from 'src/component/task-list-message';
 import { fetchMyTasks } from 'src/page/my-tasks/fetchMyTasks';
 import { getNextPageParam } from 'src/page/my-tasks/getNextPageParam';
-import { ITask } from 'src/type';
-import { QueryKey } from 'src/type/QueryKey';
+import { QueryKey } from 'src/type';
+import { TaskListItem } from 'todos-shared';
 
 export function MyTasks(): JSX.Element {
   const pageSize = 10;
@@ -56,14 +56,14 @@ export function MyTasks(): JSX.Element {
     [fetchNextPage, refetch, data],
   );
 
-  const tasks = useMemo((): Omit<ITask, 'createdOn'>[] => data?.pages.flat() || [], [data]);
+  const tasks = useMemo((): readonly TaskListItem[] => data?.pages.flat() || [], [data]);
 
   return (
-    <PageFrame title='My Tasks'>
-      <Stack mb={3} spacing={1}>
+    <ProtectedResource>
+      <PageFrame title='My Tasks'>
         {isTaskListVisible && <TaskList tasks={tasks} />}
         {isNoTasksFoundVisible && <TaskListMessage text='No tasks found' />}
-        <Divider />
+        {(isNoTasksFoundVisible || isTaskListVisible) && <Divider />}
         {isNoMoreTasksVisible && <TaskListMessage text='No more tasks' />}
         {isLoadingStateVisible && <LoadingButton loading />}
         {isLoadMoreButtonVisible && <LoadingButton onClick={onLoadMoreClicked}>Load more</LoadingButton>}
@@ -74,7 +74,7 @@ export function MyTasks(): JSX.Element {
             <LoadingButton onClick={onTryAgainClicked}>Try again</LoadingButton>
           </>
         )}
-      </Stack>
-    </PageFrame>
+      </PageFrame>
+    </ProtectedResource>
   );
 }

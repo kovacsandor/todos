@@ -1,5 +1,5 @@
-import { ITask } from 'src/type';
+import { Task } from 'todos-shared';
 
 export interface ITaskAvatarProps {
-  readonly type: ITask['type'];
+  readonly type: Task['type'];
 }

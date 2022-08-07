@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MomentInput } from 'moment';
 import { TaskListDivider } from 'src/component/task-list/TaskListDivider';
-import { ITask } from 'src/type';
+import { TaskListItem } from 'todos-shared';
 
 const mockFormat = jest.fn();
 const mockMonth = jest.fn();
@@ -16,7 +16,7 @@ jest.mock('moment', () => (input: MomentInput) => ({
 }));
 
 describe('TaskListDivider', () => {
-  const curr: Omit<ITask, 'createdOn'> = {
+  const curr: TaskListItem = {
     dueDate: 123456,
     id: 'id2',
     status: 'todo',
@@ -25,7 +25,7 @@ describe('TaskListDivider', () => {
   };
 
   describe('curr is first item in the list', () => {
-    const prev: Omit<ITask, 'createdOn'> | undefined = undefined;
+    const prev: TaskListItem | undefined = undefined;
 
     beforeEach(() => {
       mockMonth.mockReturnValue('january');
@@ -41,7 +41,7 @@ describe('TaskListDivider', () => {
   });
 
   describe('curr is not the first item in the list', () => {
-    const prev: Omit<ITask, 'createdOn'> | undefined = {
+    const prev: TaskListItem | undefined = {
       dueDate: 123456,
       id: 'id1',
       status: 'todo',

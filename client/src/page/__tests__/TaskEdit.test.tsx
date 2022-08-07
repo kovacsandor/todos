@@ -21,6 +21,6 @@ describe('TaskEdit', () => {
   });
 
   test('children are rendered', () => {
-    screen.getAllByText(/PageTaskEdit/i);
+    screen.getAllByText(/Coming soon.../i);
   });
 });

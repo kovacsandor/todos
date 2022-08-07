@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { ITask } from 'src/type';
+import { createUrl, replaceParams } from 'src/helper';
+import { GetMyTasks, GetMyTasksPayload } from 'todos-shared';
 
-interface IResponseGetTodosMyTasks {
-  readonly tasks: readonly Omit<ITask, 'createdOn'>[];
-}
+export const fetchMyTasks = async (from: number): Promise<GetMyTasksPayload['tasks']> => {
+  const method: GetMyTasks['method'] = 'get';
+  const path: GetMyTasks['path'] = '/api/todos/my-tasks/:from';
+  const params: GetMyTasks['params'] = { from: String(from) };
+  const url = replaceParams(createUrl(path), params);
+  const { data } = await axios[method]<GetMyTasks['response']>(url);
 
-export const fetchMyTasks = async (from: number) => {
-  const url = `${process.env.REACT_APP_BACKEND_API_URL}/api/todos/my-tasks/${from}`;
-  const { data } = await axios.get<IResponseGetTodosMyTasks>(url);
+  if (data.type === 'Success') {
+    return data.payload.tasks;
+  }
 
-  return data.tasks;
+  throw new Error('Invalid case');
 };

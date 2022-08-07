@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { ITaskListDividerProps } from 'src/component/task-list/ITaskListDividerProps';
 import { TaskListItem } from 'src/component/task-list/TaskListItem';
 import { ITaskProps } from 'src/component/task/ITaskProps';
-import { ITask } from 'src/type';
+import Shared from 'todos-shared';
 
 jest.mock('src/component', () => ({
   Task: ({ task }: ITaskProps) => (
@@ -24,7 +24,7 @@ jest.mock('src/component/task-list/TaskListDivider', () => ({
 }));
 
 describe('TaskListItem', () => {
-  const curr: Omit<ITask, 'createdOn'> = {
+  const curr: Shared.TaskListItem = {
     dueDate: 123456,
     id: 'id2',
     status: 'todo',
@@ -32,7 +32,7 @@ describe('TaskListItem', () => {
     type: 'private',
   };
 
-  const prev: Omit<ITask, 'createdOn'> = {
+  const prev: Shared.TaskListItem = {
     dueDate: 123456,
     id: 'id1',
     status: 'todo',

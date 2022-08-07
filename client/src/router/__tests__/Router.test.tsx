@@ -17,6 +17,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('src/page', () => ({
   Completed: () => <>Page completed</>,
+  LoginPage: () => <>Page add new task</>,
   MyTasks: () => <>Page my tasks</>,
   NotFound: () => <>Page Not Found</>,
   TaskEdit: () => <>Page edit task</>,

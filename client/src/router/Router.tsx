@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Completed, MyTasks, NotFound, TaskEdit, TaskNew } from 'src/page';
+import { Completed, LoginPage, MyTasks, NotFound, TaskEdit, TaskNew } from 'src/page';
 import { Redirect } from 'src/router/Redirect';
 
 export function Router() {
@@ -21,6 +21,7 @@ export function Router() {
             <Route index element={<NotFound />} />
           </Route>
         </Route>
+        <Route path='login' element={<LoginPage />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
     </BrowserRouter>

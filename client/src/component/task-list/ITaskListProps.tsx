@@ -1,5 +1,5 @@
-import { ITask } from 'src/type';
+import { TaskListItem } from 'todos-shared';
 
 export interface ITaskListProps {
-  readonly tasks: readonly Omit<ITask, 'createdOn'>[];
+  readonly tasks: readonly TaskListItem[];
 }

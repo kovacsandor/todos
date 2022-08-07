@@ -21,6 +21,6 @@ describe('TaskNew', () => {
   });
 
   test('children are rendered', () => {
-    screen.getAllByText(/PageTaskNew/i);
+    screen.getAllByText(/Coming soon.../i);
   });
 });

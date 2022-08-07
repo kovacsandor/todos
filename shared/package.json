@@ -1,0 +1,21 @@
+{
+  "name": "todos-shared",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "postbuild": "tscpaths --project tsconfig.json --src ./src --out ./dist",
+    "prebuild": "rm -rf ./dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tscpaths": "0.0.9",
+    "typescript": "4.7.4"
+  },
+  "dependencies": {
+    "yup": "0.32.11"
+  }
+}

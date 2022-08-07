@@ -2,7 +2,7 @@ import { ListProps } from '@mui/material/List';
 import { render, screen, within } from '@testing-library/react';
 import { TaskList } from 'src/component/task-list';
 import { ITaskListItemProps } from 'src/component/task-list/ITaskListItemProps';
-import { ITask } from 'src/type';
+import { TaskListItem } from 'todos-shared';
 
 jest.mock('@mui/material/List', () => ({ children }: ListProps) => (
   <div>
@@ -22,7 +22,7 @@ jest.mock('src/component/task-list/TaskListItem', () => ({
 }));
 
 describe('TaskList', () => {
-  const tasks: readonly Omit<ITask, 'createdOn'>[] = [
+  const tasks: readonly TaskListItem[] = [
     {
       dueDate: 123456,
       id: 'id1',

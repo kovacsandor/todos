@@ -1,18 +1,22 @@
 {
-    "cSpell.words": [
-        "browserslist",
-        "flexgrow",
-        "overridable",
-        "tanstack",
-        "todos"
-    ],
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": true
-    },
-    "editor.formatOnSave": true,
-    "editor.rulers": [
-        120
-    ],
-    "typescript.preferences.importModuleSpecifier": "non-relative",
-    "typescript.preferences.quoteStyle": "single"
+  "cSpell.words": [
+    "browserslist",
+    "flexgrow",
+    "formik",
+    "overridable",
+    "postbuild",
+    "reduxjs",
+    "tanstack",
+    "todos",
+    "tscpaths"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "editor.formatOnSave": true,
+  "editor.rulers": [
+    120
+  ],
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "typescript.preferences.quoteStyle": "single"
 }

@@ -1,36 +1,37 @@
+import { json } from 'body-parser';
 import cors from 'cors';
-import express, { Express, NextFunction, Request, Response } from 'express';
-import { generateTasks } from './generateTasks';
-import { getParamFrom } from './getParamFrom';
-import { getTasksTodo } from './getTasksTodo';
-import { ITask } from './ITask';
+import { config } from 'dotenv';
+import express, { Express } from 'express';
+import { handleError } from 'src/middleware';
+import { generateTasks, generateUsers } from 'src/mock';
+import { getLoggedInUser, getMyTasks, logIn } from 'src/route';
+import { Task, User } from 'todos-shared';
 
-interface IResponseGetTodosMyTasks {
-  readonly tasks: readonly Omit<ITask, 'createdOn'>[];
-}
+config();
 
-interface IRequestParamsGetTodosMyTasks {
-  readonly from: string;
-}
-
-const tasks: ITask[] = generateTasks();
+const users: readonly User[] = generateUsers();
+const tasks: readonly Task[] = generateTasks(users);
 
 const application: Express = express();
-const port: number = 8080;
+const port: number = Number(process.env.PORT);
 
-application.use(cors());
-
-application.get(
-  '/api/todos/my-tasks/:from',
-  (req: Request<IRequestParamsGetTodosMyTasks>, res: Response<IResponseGetTodosMyTasks>, next: NextFunction): void => {
-    const from = getParamFrom(req.params.from);
-
-    res.send({
-      tasks: getTasksTodo(tasks, from),
-    });
-  },
+application.use(
+  cors({
+    origin: process.env.CLIENT_ORIGIN,
+  }),
 );
+application.use(json());
+
+configureRoutes(application);
+
+application.use(handleError);
 
 application.listen(port, (): void => {
   console.log(`Listening at http://localhost:${port}`);
 });
+
+function configureRoutes(application: Express): void {
+  getMyTasks(application, tasks, users);
+  logIn(application, users);
+  getLoggedInUser(application, users);
+}

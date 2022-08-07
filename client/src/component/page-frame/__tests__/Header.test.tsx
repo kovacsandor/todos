@@ -36,6 +36,10 @@ jest.mock(
       ),
 );
 
+jest.mock('src/component/page-frame/LoggedInUser', () => ({
+  LoggedInUser: () => <div>LoggedInUser</div>,
+}));
+
 describe('Header', () => {
   const pageTitle = 'test page title';
 

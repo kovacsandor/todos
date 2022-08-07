@@ -1,10 +1,7 @@
-import { ITask } from 'src/type';
+import { TaskListItem } from 'todos-shared';
 
 export function getNextPageParam(pageSize: number) {
-  return (
-    lastPage: readonly Omit<ITask, 'createdOn'>[],
-    allPages: (readonly Omit<ITask, 'createdOn'>[])[],
-  ): number | false => {
+  return (lastPage: readonly TaskListItem[], allPages: (readonly TaskListItem[])[]): number | false => {
     return lastPage.length > pageSize - 1 && allPages.length;
   };
 }

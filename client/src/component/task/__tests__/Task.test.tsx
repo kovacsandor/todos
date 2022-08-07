@@ -2,7 +2,7 @@ import { ListItemProps, ListItemTextProps } from '@mui/material';
 import { render, screen, within } from '@testing-library/react';
 import { Task } from 'src/component/task';
 import { ITaskAvatarProps } from 'src/component/task/ITaskAvatarProps';
-import { ITask } from 'src/type/ITask';
+import Shared from 'todos-shared';
 
 type MockMoment = { readonly format: (formatString: string) => string };
 const mockFormat = jest.fn<string, [string]>();
@@ -41,7 +41,7 @@ jest.mock(
 );
 
 describe('Task', () => {
-  const task: Omit<ITask, 'createdOn' | 'id' | 'status'> = {
+  const task: Pick<Shared.Task, 'dueDate' | 'type' | 'summary'> = {
     dueDate: 123456,
     summary: 'summary',
     type: 'private',

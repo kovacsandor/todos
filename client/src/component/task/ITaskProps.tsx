@@ -1,5 +1,5 @@
-import { ITask } from 'src/type';
+import { Task } from 'todos-shared';
 
 export interface ITaskProps {
-  readonly task: Pick<ITask, 'dueDate' | 'type' | 'summary'>;
+  readonly task: Pick<Task, 'dueDate' | 'type' | 'summary'>;
 }

@@ -21,6 +21,6 @@ describe('Completed', () => {
   });
 
   test('children are rendered', () => {
-    screen.getAllByText(/PageCompleted/i);
+    screen.getAllByText(/Coming soon.../i);
   });
 });
