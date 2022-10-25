@@ -61,6 +61,9 @@
     "coveragePathIgnorePatterns": [
       "src/index.ts",
       "src/reportWebVitals.ts"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(@mui))"
     ]
   }
 }
