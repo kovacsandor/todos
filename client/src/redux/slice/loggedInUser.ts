@@ -1,11 +1,12 @@
-import { createSlice, PayloadAction, SliceCaseReducers } from '@reduxjs/toolkit';
-import { User } from 'todos-shared';
-type State = Pick<User, 'name'> | null;
+import { createSlice, PayloadAction, Slice, SliceCaseReducers } from '@reduxjs/toolkit';
+import { RootState } from 'src/redux/type';
+
+type State = RootState['loggedInUser'];
 
 export const {
   actions: { setLoggedInUser },
   reducer: loggedInUser,
-} = createSlice<State, SliceCaseReducers<State>>({
+}: Slice<State> = createSlice<State, SliceCaseReducers<State>>({
   initialState: null,
   name: 'loggedInUser',
   reducers: {

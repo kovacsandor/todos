@@ -7,10 +7,11 @@ type MockQueryClient = { readonly id: 'MockQueryClient' };
 
 jest.mock('@mui/material/CssBaseline', () => () => <div>CssBaseline</div>);
 
+jest.mock('src/react-query', () => ({
+  queryClient: { id: 'MockQueryClient' },
+}));
+
 jest.mock('@tanstack/react-query', () => ({
-  QueryClient: function (): MockQueryClient {
-    return { id: 'MockQueryClient' };
-  },
   QueryClientProvider: ({ children, client }: PropsWithChildren<{ readonly client: MockQueryClient }>) => (
     <div>
       QueryClientProvider

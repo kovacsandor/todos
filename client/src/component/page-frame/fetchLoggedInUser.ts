@@ -6,6 +6,7 @@ export const fetchLoggedInUser = async (): Promise<GetLoggedInUserPayload['logge
   const method: GetLoggedInUser['method'] = 'get';
   const path: GetLoggedInUser['path'] = '/api/logged-in-user';
   const url = createUrl(path);
+
   const { data } = await axios[method]<GetLoggedInUser['response']>(url);
 
   if (data.type === 'Success') {

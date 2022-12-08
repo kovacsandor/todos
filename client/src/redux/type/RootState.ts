@@ -1,3 +1,6 @@
-import { store } from 'src/redux';
+import { User } from 'todos-shared';
 
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = {
+  readonly authorization: string | null;
+  readonly loggedInUser: Pick<User, 'name'> | null;
+};

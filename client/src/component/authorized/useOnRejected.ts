@@ -1,14 +1,12 @@
 import { AxiosError } from 'axios';
-import { setToken, useAppDispatch } from 'src/redux';
-import { LocalStorageKey } from 'src/type';
+import { useLogout } from 'src/hook';
 
 export const useOnRejected = (): ((error: AxiosError) => never) => {
-  const dispatch = useAppDispatch();
+  const logout = useLogout();
 
   return (error: AxiosError): never => {
     if (error.response?.status === 401) {
-      localStorage.removeItem(LocalStorageKey.Token);
-      dispatch(setToken(null));
+      logout();
     }
     throw error;
   };

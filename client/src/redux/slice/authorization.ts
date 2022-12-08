@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'src/redux/type';
 import { LocalStorageKey } from 'src/type';
+
+type State = RootState['authorization'];
 
 export const {
   actions: { setToken },
@@ -8,7 +11,7 @@ export const {
   initialState: localStorage.getItem(LocalStorageKey.Token),
   name: 'authorization',
   reducers: {
-    setToken: (state: string | null, action: PayloadAction<string | null>): string | null => {
+    setToken: (state: State, action: PayloadAction<State>): State => {
       return action.payload;
     },
   },

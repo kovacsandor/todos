@@ -5,6 +5,7 @@ import { LoginPage } from 'src/page/login/LoginPage';
 
 const mockNavigate = jest.fn();
 const mockPost = jest.fn();
+const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 
 jest.mock('axios', () => ({
   post: () => mockPost(),
@@ -26,7 +27,7 @@ describe('LoginPage', () => {
 
   test('email and password fields are visible', () => {
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );
@@ -39,7 +40,7 @@ describe('LoginPage', () => {
 
   test('there are no validation messages initially', () => {
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );
@@ -52,7 +53,7 @@ describe('LoginPage', () => {
 
   test('enabled login button is visible and enabled initially', () => {
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );
@@ -68,7 +69,7 @@ describe('LoginPage', () => {
     const user = userEvent.setup();
 
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );
@@ -88,7 +89,7 @@ describe('LoginPage', () => {
     const user = userEvent.setup();
 
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );
@@ -149,7 +150,7 @@ describe('LoginPage', () => {
     const user = userEvent.setup();
 
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );
@@ -184,7 +185,7 @@ describe('LoginPage', () => {
     const user = userEvent.setup();
 
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );
@@ -218,7 +219,7 @@ describe('LoginPage', () => {
     const user = userEvent.setup();
 
     render(
-      <QueryClientProvider client={new QueryClient()}>
+      <QueryClientProvider client={queryClient}>
         <LoginPage />
       </QueryClientProvider>,
     );

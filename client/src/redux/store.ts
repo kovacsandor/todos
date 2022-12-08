@@ -1,9 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { authorization, loggedInUser } from 'src/redux/reducer';
+import { storeOptionReducer } from 'src/redux/storeOptionReducer';
 
 export const store = configureStore({
-  reducer: {
-    authorization,
-    loggedInUser,
-  },
+  reducer: storeOptionReducer,
 });
