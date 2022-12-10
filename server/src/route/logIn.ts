@@ -1,8 +1,6 @@
 import { Express, NextFunction, Request, Response } from 'express';
-import { encode } from 'jwt-simple';
 import { CustomValidationError } from 'src/error';
-import { validateFields } from 'src/helper';
-import { JWTPayload } from 'src/type';
+import { getJWT, validateFields } from 'src/helper';
 import { Login, loginValidationSchema, StatusCode, User } from 'todos-shared';
 
 const method: Login['method'] = 'post';
@@ -28,12 +26,7 @@ export const logIn = (application: Express, users: readonly User[]) => {
         throw new CustomValidationError(StatusCode.Forbidden, 'Incorrect password', req.body.password, 'password');
       }
 
-      const payload: JWTPayload = {
-        iat: new Date().getTime(),
-        sub: user.id,
-      };
-
-      const token = encode(payload, process.env.JWT_SECRET);
+      const token = getJWT(user.id);
 
       res.send({
         payload: { token },

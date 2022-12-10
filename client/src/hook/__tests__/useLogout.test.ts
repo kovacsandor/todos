@@ -30,7 +30,7 @@ jest.mock('src/react-query', () => ({
 }));
 
 describe('useLogout', () => {
-  test('if user gets logged out', () => {
+  test('user gets logged out', () => {
     mockSetToken.mockReturnValue(mockSetTokenAction);
     mockUseAppDispatch.mockReturnValue(mockDispatch);
     const { result } = renderHook(useLogout);

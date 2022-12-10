@@ -7,6 +7,7 @@ export const fetchMyTasks = async (from: number): Promise<GetMyTasksPayload['tas
   const path: GetMyTasks['path'] = '/api/todos/my-tasks/:from';
   const params: GetMyTasks['params'] = { from: String(from) };
   const url = replaceParams(createUrl(path), params);
+
   const { data } = await axios[method]<GetMyTasks['response']>(url);
 
   if (data.type === 'Success') {

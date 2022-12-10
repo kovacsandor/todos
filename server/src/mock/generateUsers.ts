@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { User } from 'todos-shared';
 
-export const generateUsers = (): readonly User[] => {
+export const generateUsers = (): User[] => {
   const count = Math.floor(Math.random() * 10) + 1;
   console.log(`Generating ${count} user${count === 1 ? '' : 's'}...`);
   const result = Array(count)

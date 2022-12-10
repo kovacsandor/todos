@@ -1,4 +1,4 @@
-import { PersonAdd } from '@mui/icons-material';
+import { Login } from '@mui/icons-material';
 import { Button, Card, CardContent, Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { useMutation } from '@tanstack/react-query';
@@ -8,23 +8,25 @@ import { useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container } from 'src/component/container';
 import { useLogin, useRedirectAuthorized } from 'src/hook';
-import { FieldEmail } from 'src/page/login/FieldEmail';
-import { FieldPassword } from 'src/page/login/FieldPassword';
-import { logIn } from 'src/page/login/logIn';
-import { SubmitButton } from 'src/page/login/SubmitButton';
-import { Login, loginValidationSchema } from 'todos-shared';
+import { FieldEmail } from 'src/page/sign-up/FieldEmail';
+import { FieldName } from 'src/page/sign-up/FieldName';
+import { FieldPassword } from 'src/page/sign-up/FieldPassword';
+import { FieldPasswordConfirmation } from 'src/page/sign-up/FieldPasswordConfirmation';
+import { signUp } from 'src/page/sign-up/signUp';
+import { SubmitButton } from 'src/page/sign-up/SubmitButton';
+import { SignUp, signUpValidationSchema } from 'todos-shared';
 
-export function LoginPage(): JSX.Element {
+export function SignUpPage(): JSX.Element {
   const navigate = useNavigate();
   const login = useLogin();
   const { isLoading, mutate, error, data, isSuccess } = useMutation<
-    Login['response'],
-    AxiosError<Login['response'], Login['requestBody']>,
-    Login['requestBody']
-  >(logIn);
+    SignUp['response'],
+    AxiosError<SignUp['response'], SignUp['requestBody']>,
+    SignUp['requestBody']
+  >(signUp);
 
-  const signUp = useCallback((): void => {
-    navigate('/sign-up');
+  const navigateToLoginPage = useCallback((): void => {
+    navigate('/login');
   }, [navigate]);
 
   useRedirectAuthorized();
@@ -35,22 +37,24 @@ export function LoginPage(): JSX.Element {
     }
   }, [data, isSuccess, login]);
 
-  const initialValues: Login['requestBody'] = {
+  const initialValues: SignUp['requestBody'] = {
     email: '',
+    name: '',
     password: '',
+    passwordConfirmation: '',
   };
 
-  const onSubmit = (values: Login['requestBody']): void => mutate(values);
+  const onSubmit = (values: SignUp['requestBody']): void => mutate(values);
 
   return (
     <Container>
       <Stack spacing={3}>
         <Card>
           <CardContent>
-            <Formik<Login['requestBody']>
+            <Formik<SignUp['requestBody']>
               initialValues={initialValues}
               onSubmit={onSubmit}
-              validationSchema={loginValidationSchema}
+              validationSchema={signUpValidationSchema}
             >
               <Form>
                 <Stack spacing={3}>
@@ -58,10 +62,12 @@ export function LoginPage(): JSX.Element {
                     Welcome to {process.env.REACT_APP_TITLE}
                   </Typography>
                   <Typography variant='body2' color='text.secondary'>
-                    Please log in before continuing.
+                    Sign up to get started.
                   </Typography>
+                  <FieldName error={error} isLoading={isLoading} />
                   <FieldEmail error={error} isLoading={isLoading} />
                   <FieldPassword error={error} isLoading={isLoading} />
+                  <FieldPasswordConfirmation error={error} isLoading={isLoading} />
                   <SubmitButton isLoading={isLoading} />
                 </Stack>
               </Form>
@@ -72,13 +78,13 @@ export function LoginPage(): JSX.Element {
           <CardContent>
             <Stack spacing={3}>
               <Typography gutterBottom variant='h6' component='div'>
-                New here?
+                Already signed up?
               </Typography>
               <Typography variant='body2' color='text.secondary'>
-                Sign up to get started.
+                Please log in before continuing.
               </Typography>
-              <Button variant='outlined' color='secondary' endIcon={<PersonAdd />} onClick={signUp}>
-                Sign up
+              <Button variant='outlined' color='secondary' endIcon={<Login />} onClick={navigateToLoginPage}>
+                Login
               </Button>
             </Stack>
           </CardContent>

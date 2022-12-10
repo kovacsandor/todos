@@ -5,11 +5,12 @@ import express, { Express } from 'express';
 import { handleError } from 'src/middleware';
 import { generateTasks, generateUsers } from 'src/mock';
 import { getLoggedInUser, getMyTasks, logIn } from 'src/route';
+import { signUp } from 'src/route/signUp';
 import { Task, User } from 'todos-shared';
 
 config();
 
-const users: readonly User[] = generateUsers();
+const users: User[] = generateUsers();
 const tasks: readonly Task[] = generateTasks(users);
 
 const application: Express = express();
@@ -31,7 +32,8 @@ application.listen(port, (): void => {
 });
 
 function configureRoutes(application: Express): void {
+  getLoggedInUser(application, users);
   getMyTasks(application, tasks, users);
   logIn(application, users);
-  getLoggedInUser(application, users);
+  signUp(application, users);
 }
