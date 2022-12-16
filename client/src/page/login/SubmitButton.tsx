@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function SubmitButton({ isLoading }: Props): JSX.Element {
-  const { errors, setTouched } = useFormikContext<Login['requestBody']>();
+  const { errors, setTouched, touched } = useFormikContext<Login['requestBody']>();
 
   const onButtonClicked = () => {
     setTouched({
@@ -19,7 +19,7 @@ export function SubmitButton({ isLoading }: Props): JSX.Element {
 
   return (
     <LoadingButton
-      disabled={!!errors.email || !!errors.password}
+      disabled={(!!errors.email && touched.email) || (!!errors.password && touched.password)}
       loading={isLoading}
       type='submit'
       variant='contained'

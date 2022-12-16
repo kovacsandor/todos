@@ -8,7 +8,7 @@ type Props = TextFieldProps & {
 };
 
 export function FormikTextField({ name, onResponseError, ...rest }: Props): JSX.Element {
-  const [{ onBlur, onChange }, { error, touched }, { setError }] = useField<string>(name);
+  const [{ onBlur, onChange }, { error, touched, value }, { setError }] = useField<string>(name);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const setResponseError = useCallback(setError, []);
@@ -25,6 +25,7 @@ export function FormikTextField({ name, onResponseError, ...rest }: Props): JSX.
       name={name}
       onBlur={onBlur}
       onChange={onChange}
+      value={value}
     />
   );
 }

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Task, User } from 'todos-shared';
 
-export const generateTasks = (users: readonly User[]): readonly Task[] => {
+export const generateTasks = (users: readonly User[]): Task[] => {
   const count = Math.floor(Math.random() * 100);
   console.log(`Generating ${count} todo${count === 1 ? '' : 's'}...`);
   return Array(count)
@@ -17,6 +17,7 @@ export const generateTasks = (users: readonly User[]): readonly Task[] => {
 
       return {
         createdOn,
+        description: faker.lorem.paragraphs(),
         dueDate,
         id: faker.database.mongodbObjectId(),
         owner: users[Math.floor(Math.random() * users.length)].id,

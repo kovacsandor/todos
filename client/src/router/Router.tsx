@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Completed, LoginPage, MyTasks, NotFound, SignUpPage, TaskEdit, TaskNew } from 'src/page';
+import { Completed, CreateTaskPage, LoginPage, MyTasks, NotFound, SignUpPage, TaskEdit } from 'src/page';
 import { Redirect } from 'src/router/Redirect';
 
 export function Router() {
@@ -13,7 +13,7 @@ export function Router() {
             <Route index element={<NotFound />} />
           </Route>
           <Route path='todo'>
-            <Route path='new' element={<TaskNew />} />
+            <Route path='new' element={<CreateTaskPage />} />
             <Route path='edit'>
               <Route path=':id' element={<TaskEdit />} />
               <Route index element={<NotFound />} />

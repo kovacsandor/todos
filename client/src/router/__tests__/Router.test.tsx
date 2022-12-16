@@ -17,12 +17,12 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('src/page', () => ({
   Completed: () => <>Page completed</>,
+  CreateTaskPage: () => <>CreateTaskPage</>,
   LoginPage: () => <>Page login</>,
   MyTasks: () => <>Page my tasks</>,
   NotFound: () => <>Page Not Found</>,
   SignUpPage: () => <>Page sign up</>,
   TaskEdit: () => <>Page edit task</>,
-  TaskNew: () => <>Page add new task</>,
 }));
 
 jest.mock('src/router/Redirect', () => ({
@@ -59,7 +59,7 @@ describe('Router', () => {
       const root = screen.getByText(/path is \/\$/i);
       const todo = within(root).getByText(/path is todo\$/i);
       const path = within(todo).getByText(/path is new\$/i);
-      within(path).getByText(/element is page add new task/i);
+      within(path).getByText(/element is CreateTaskPage/i);
     });
 
     test('todo/edit/:id', () => {

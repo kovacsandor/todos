@@ -5,6 +5,8 @@ export * from 'src/type/ServerResponseValidation';
 export * from 'src/type/ServerResponseValidationError';
 export * from 'src/type/StatusCode';
 export * from 'src/type/Task';
+export * from 'src/type/TaskDetails';
 export * from 'src/type/TaskListItem';
+export * from 'src/type/TaskPayload';
 export * from 'src/type/User';
 export * from 'src/type/Validation';

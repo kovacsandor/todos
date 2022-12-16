@@ -21,7 +21,7 @@ export const authorizeUser =
   ) =>
   (
     req: Request<P, ResBody, ReqBody, ReqQuery, Locals>,
-    res: Response<string, UnauthorizedLocals>,
+    res: Response<ResBody, UnauthorizedLocals>,
     next: NextFunction,
   ): void => {
     if (!req.headers.authorization) {

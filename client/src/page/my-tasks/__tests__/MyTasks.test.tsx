@@ -61,7 +61,7 @@ describe('MyTasks', () => {
               {
                 status: 'todo',
                 summary: 'Summary of the task',
-                dueDate: new Date().getMilliseconds(),
+                dueDate: new Date().getTime(),
                 id: '0123456789',
                 type: 'private',
               },
