@@ -10,7 +10,7 @@ const path: GetMyTasks['path'] = '/api/todos/my-tasks/:from';
 export const getMyTasks = (application: Express, tasks: readonly Task[], users: readonly User[]) => {
   application[method](
     path,
-    authorizeUser(users),
+    authorizeUser(),
     (
       req: Request<GetMyTasks['requestBody']>,
       res: Response<GetMyTasks['response'], AuthorizedLocals>,

@@ -10,7 +10,7 @@ const path: CreateTask['path'] = '/api/task';
 export const createTask = (application: Express, users: readonly User[], tasks: Task[]) => {
   application[method](
     path,
-    authorizeUser(users),
+    authorizeUser(),
     (
       req: Request<{}, CreateTask['response'], CreateTask['requestBody']>,
       res: Response<CreateTask['response'], AuthorizedLocals>,

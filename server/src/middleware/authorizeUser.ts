@@ -6,7 +6,7 @@ import { JWTPayload } from 'src/type';
 import { StatusCode, User } from 'todos-shared';
 
 interface UnauthorizedLocals {
-  user?: User;
+  user?: Pick<User, 'id'>;
 }
 
 export const authorizeUser =
@@ -16,9 +16,7 @@ export const authorizeUser =
     ReqBody = any,
     ReqQuery = Query,
     Locals extends Record<string, any> = Record<string, any>,
-  >(
-    users: readonly User[],
-  ) =>
+  >() =>
   (
     req: Request<P, ResBody, ReqBody, ReqQuery, Locals>,
     res: Response<ResBody, UnauthorizedLocals>,
@@ -36,13 +34,9 @@ export const authorizeUser =
       throw new HttpError(StatusCode.Unauthorized, 'Token is outdated');
     }
 
-    const user = users.find((user) => user.id === sub);
-
-    if (!user) {
-      throw new HttpError(StatusCode.Unauthorized, 'User not found');
-    }
-
-    res.locals.user = user;
+    res.locals.user = {
+      id: sub,
+    };
 
     next();
   };
