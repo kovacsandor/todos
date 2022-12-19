@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { Express, NextFunction, Request, Response } from 'express';
-import { authorizeUser } from 'src/middleware';
-import { AuthorizedLocals } from 'src/type';
-import { CreateTask, Task, User } from 'todos-shared';
+import { CreateTask, createTaskValidationSchema, Task, User } from 'todos-shared';
+import { AuthorizedLocals, authorizeUser, validateFields } from 'todos-shared-microservices';
 
 const method: CreateTask['method'] = 'post';
 const path: CreateTask['path'] = '/api/task';
@@ -10,16 +9,18 @@ const path: CreateTask['path'] = '/api/task';
 export const createTask = (application: Express, users: readonly User[], tasks: Task[]) => {
   application[method](
     path,
-    authorizeUser(),
+    authorizeUser,
     (
       req: Request<{}, CreateTask['response'], CreateTask['requestBody']>,
       res: Response<CreateTask['response'], AuthorizedLocals>,
       next: NextFunction,
     ): void => {
+      validateFields(req.body, createTaskValidationSchema);
+
       const task: Task = {
-        createdOn: new Date().getMilliseconds(),
+        createdOn: new Date(),
         description: req.body.description,
-        dueDate: req.body.dueDate,
+        dueDate: new Date(req.body.dueDate),
         id: faker.database.mongodbObjectId(),
         owner: res.locals.user.id,
         status: 'todo',

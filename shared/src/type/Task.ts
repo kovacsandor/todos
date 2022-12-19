@@ -1,7 +1,7 @@
 export interface Task {
-  readonly createdOn: number;
+  readonly createdOn: Date;
   readonly description: string;
-  readonly dueDate: number;
+  readonly dueDate: Date;
   readonly id: string;
   readonly owner: string;
   readonly status: 'completed' | 'todo';

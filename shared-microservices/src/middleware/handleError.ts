@@ -22,6 +22,11 @@ export const handleError = <T>(
   if (err instanceof ValidationError) {
     return handleValidationError(err, req, res, next);
   }
+
+  res.status(StatusCode.InternalServerError).send({
+    message: 'An unexpected error has occurred',
+    type: 'HttpError',
+  });
 };
 
 const handleHttpError = (

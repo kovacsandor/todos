@@ -2,11 +2,10 @@ import { json } from 'body-parser';
 import cors from 'cors';
 import { config } from 'dotenv';
 import express, { Express } from 'express';
-import { handleError } from 'src/middleware';
 import { generateTasks, generateUsers } from 'src/mock';
-import { createTask, getLoggedInUser, getMyTasks, logIn } from 'src/route';
-import { signUp } from 'src/route/signUp';
+import { createTask, getLoggedInUser, getMyTasks, logIn, signUp } from 'src/route';
 import { Task, User } from 'todos-shared';
+import { handleError } from 'todos-shared-microservices';
 
 config();
 

@@ -50,7 +50,7 @@ export function CreateTaskPage(): JSX.Element {
     if (dueDate !== null) {
       mutate({
         ...rest,
-        dueDate: moment(dueDate).valueOf(),
+        dueDate: moment(dueDate).toISOString(),
       });
     }
   };

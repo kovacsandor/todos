@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import { Express, NextFunction, Request, Response } from 'express';
-import { CustomValidationError } from 'src/error';
-import { getJWT, validateFields } from 'src/helper';
+import { getJWT } from 'src/helper';
 import { SignUp, signUpValidationSchema, StatusCode, User } from 'todos-shared';
+import { CustomValidationError, validateFields } from 'todos-shared-microservices';
 
 const method: SignUp['method'] = 'post';
 const path: SignUp['path'] = '/api/sign-up';

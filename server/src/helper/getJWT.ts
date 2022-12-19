@@ -1,6 +1,6 @@
 import { encode } from 'jwt-simple';
-import { JWTPayload } from 'src/type';
 import { User } from 'todos-shared';
+import { JWTPayload } from 'todos-shared-microservices';
 
 export const getJWT = (userId: User['id']): string => {
   const payload: JWTPayload = {

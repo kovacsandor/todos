@@ -11,14 +11,14 @@ export const generateTasks = (users: readonly User[]): Task[] => {
       const year = 1 * 365 * 24 * 60 * 60 * 1000;
       const dueDateFrom = new Date(now - year).toString();
       const dueDateTo = new Date(now + year).toString();
-      const dueDate = faker.date.between(dueDateFrom, dueDateTo).getTime();
+      const dueDate = faker.date.between(dueDateFrom, dueDateTo).valueOf();
       const createdOnFrom = new Date(dueDate - year).toString();
-      const createdOn = faker.date.between(createdOnFrom, dueDate.toString()).getTime();
+      const createdOn = faker.date.between(createdOnFrom, dueDate.toString()).valueOf();
 
       return {
-        createdOn,
+        createdOn: new Date(createdOn),
         description: faker.lorem.paragraphs(),
-        dueDate,
+        dueDate: new Date(dueDate),
         id: faker.database.mongodbObjectId(),
         owner: users[Math.floor(Math.random() * users.length)].id,
         status: Math.random() > 0.5 ? 'completed' : 'todo',
@@ -26,5 +26,5 @@ export const generateTasks = (users: readonly User[]): Task[] => {
         type: Math.random() > 0.5 ? 'private' : 'work',
       };
     })
-    .sort((a: Task, b: Task) => a.createdOn - b.createdOn);
+    .sort((a: Task, b: Task) => a.createdOn.valueOf() - b.createdOn.valueOf());
 };

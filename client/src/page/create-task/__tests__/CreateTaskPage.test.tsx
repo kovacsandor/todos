@@ -95,7 +95,7 @@ describe('CreateTaskPage', () => {
 
     expect(mockPost).toBeCalledWith('REACT_APP_BACKEND_API_URL/api/task', {
       description: 'Do not forget to invite John Doe',
-      dueDate: 1671145199000,
+      dueDate: '2022-12-15T22:59:59.000Z',
       summary: 'Organize the meeting',
       type: 'work',
     });
