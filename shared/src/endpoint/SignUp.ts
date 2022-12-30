@@ -1,7 +1,7 @@
 import { LoginPayload } from 'src/response';
 import { Endpoint, ServerResponseValidation, User } from 'src/type';
 
-export type SignUp = Endpoint<'post', Record<string, never>, '/api/sign-up', Request, Response>;
+export type SignUp = Endpoint<'post', Record<string, never>, '/api/user-service/sign-up', Request, Response>;
 
 type Request = Pick<User, 'email' | 'name' | 'password'> & {
   readonly passwordConfirmation: string;

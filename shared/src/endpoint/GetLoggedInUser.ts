@@ -4,7 +4,7 @@ import { Endpoint, ServerResponse } from 'src/type';
 export type GetLoggedInUser = Endpoint<
   'get',
   Record<string, never>,
-  '/api/logged-in-user',
+  '/api/user-service/logged-in-user',
   Record<string, never>,
   Response
 >;

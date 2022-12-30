@@ -1,0 +1,14 @@
+name: Test shared
+
+on:
+  pull_request:
+    paths:
+      - 'shared/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd shared && npm ci && npm test

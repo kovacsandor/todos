@@ -1,6 +1,6 @@
 export interface Task {
   readonly createdOn: Date;
-  readonly description: string;
+  readonly description?: string;
   readonly dueDate: Date;
   readonly id: string;
   readonly owner: string;

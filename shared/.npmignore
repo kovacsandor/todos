@@ -1,6 +1,8 @@
-node_modules
-src
+__tests__
 .gitignore
 .npmignore
+jest.config.ts
+node_modules
 package-lock.json
+src
 tsconfig.json

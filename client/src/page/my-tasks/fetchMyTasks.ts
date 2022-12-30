@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { createUrl, replaceParams } from 'src/helper';
-import { GetMyTasks, GetMyTasksPayload } from 'todos-shared';
+import { createUrl } from 'src/helper';
+import { GetMyTasks, GetMyTasksPayload, replaceParams } from 'todos-shared';
 
 export const fetchMyTasks = async (from: number): Promise<GetMyTasksPayload['tasks']> => {
   const method: GetMyTasks['method'] = 'get';
-  const path: GetMyTasks['path'] = '/api/todos/my-tasks/:from';
+  const path: GetMyTasks['path'] = '/api/task-service/my-tasks/:from';
   const params: GetMyTasks['params'] = { from: String(from) };
   const url = replaceParams(createUrl(path), params);
 

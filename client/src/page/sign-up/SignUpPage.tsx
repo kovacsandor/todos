@@ -59,7 +59,7 @@ export function SignUpPage(): JSX.Element {
               <Form>
                 <Stack spacing={3}>
                   <Typography gutterBottom variant='h5' component='div'>
-                    Welcome to {process.env.REACT_APP_TITLE}
+                    Welcome to {process.env.REACT_APP_WEBSITE_NAME}
                   </Typography>
                   <Typography variant='body2' color='text.secondary'>
                     Sign up to get started.

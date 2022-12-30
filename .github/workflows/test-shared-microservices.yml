@@ -1,0 +1,14 @@
+name: Test shared-microservices
+
+on:
+  pull_request:
+    paths:
+      - 'shared-microservices/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd shared-microservices && npm ci && npm test

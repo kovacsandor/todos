@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-service-deployment-label
+  template:
+    metadata:
+      labels:
+        app: task-service-deployment-label
+    spec:
+      containers:
+        - name: task-service-container
+          image: andorkovacs/todos-task-service
+          envFrom:
+            - secretRef:
+                name: task-service-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-service
+spec:
+  selector:
+    app: task-service-deployment-label
+  type: ClusterIP
+  ports:
+    - name: task-service-cluster-ip-port-name
+      protocol: TCP
+      port: 8081
+      targetPort: 8081

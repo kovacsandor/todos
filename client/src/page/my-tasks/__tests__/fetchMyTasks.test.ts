@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
-import { createUrl, replaceParams } from 'src/helper';
+import { createUrl } from 'src/helper';
 import { fetchMyTasks } from 'src/page/my-tasks/fetchMyTasks';
+import { replaceParams } from 'todos-shared';
 
 const mockData = {
   type: 'Success',
@@ -19,6 +20,9 @@ jest.mock('axios', () => ({
 
 jest.mock('src/helper', () => ({
   createUrl: (path: string): string => mockCreateUrl(path),
+}));
+
+jest.mock('todos-shared', () => ({
   replaceParams: (url: string, params: Record<string, string>): string => mockReplaceParams(url, params),
 }));
 
@@ -35,7 +39,7 @@ describe('fetchMyTasks', () => {
 
   test('calls correct api endpoint', async () => {
     await fetchMyTasks(from);
-    expect(mockCreateUrl).toBeCalledWith(`/api/todos/my-tasks/:from`);
+    expect(mockCreateUrl).toBeCalledWith(`/api/task-service/my-tasks/:from`);
     expect(mockReplaceParams).toBeCalledWith(mockUrl, { from: String(from) });
     expect(mockGet).toBeCalledWith(mockReplacedUrl);
   });

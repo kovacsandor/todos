@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: task-service-database-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: task-service-database-deployment-label
+  template:
+    metadata:
+      labels:
+        app: task-service-database-deployment-label
+    spec:
+      containers:
+        - name: task-service-database-container
+          image: mongo
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: task-service-database
+spec:
+  selector:
+    app: task-service-database-deployment-label
+  type: ClusterIP
+  ports:
+    - name: task-service-database-cluster-ip-port-name
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

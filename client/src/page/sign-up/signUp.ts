@@ -9,7 +9,7 @@ export const signUp = async ({
   passwordConfirmation,
 }: SignUp['requestBody']): Promise<SignUp['response']> => {
   const method: SignUp['method'] = 'post';
-  const path: SignUp['path'] = '/api/sign-up';
+  const path: SignUp['path'] = '/api/user-service/sign-up';
   const url = createUrl(path);
   const { data } = await axios[method]<SignUp['response'], AxiosResponse<SignUp['response']>, SignUp['requestBody']>(
     url,

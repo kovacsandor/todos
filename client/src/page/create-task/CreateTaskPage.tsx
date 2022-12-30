@@ -16,7 +16,7 @@ import { FormikValues } from 'src/page/create-task/FormikValues';
 import { SubmitButton } from 'src/page/create-task/SubmitButton';
 import { queryClient } from 'src/react-query';
 import { QueryKey } from 'src/type';
-import { CreateTask, createTaskValidationSchema } from 'todos-shared';
+import { CreateTask, createTaskValidationSchema, getTimeBeforeTomorrow } from 'todos-shared';
 
 export function CreateTaskPage(): JSX.Element {
   const navigate = useNavigate();
@@ -33,15 +33,9 @@ export function CreateTaskPage(): JSX.Element {
     }
   }, [data, isSuccess, navigate]);
 
-  const getTodayBeforeMidnight = (): Date => {
-    return moment(moment().format('YYYY-MM-DD'))
-      .add(60 * 60 * 24 - 1, 'seconds')
-      .toDate();
-  };
-
   const initialValues: FormikValues = {
     description: '',
-    dueDate: getTodayBeforeMidnight(),
+    dueDate: getTimeBeforeTomorrow(),
     summary: '',
     type: 'private',
   };

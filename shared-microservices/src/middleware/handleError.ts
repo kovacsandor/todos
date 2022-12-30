@@ -50,7 +50,7 @@ const handleCustomValidationError = <T>(
   res.status(err.statusCode).send({
     message: err.message,
     type: 'ValidationError',
-    validation: getValidation(err),
+    validation: getValidation(err.inner),
   });
 };
 
@@ -63,12 +63,12 @@ const handleValidationError = <T>(
   res.status(StatusCode.UnprocessableEntity).send({
     message: err.message,
     type: 'ValidationError',
-    validation: getValidation(err),
+    validation: getValidation(err.inner),
   });
 };
 
-function getValidation<T>(err: ValidationError): Validation<T> {
-  return err.inner.reduce((acc: Validation<T>, curr: ValidationError): Validation<T> => {
+function getValidation<T>(inner: ValidationError['inner']): Validation<T> {
+  return inner.reduce((acc: Validation<T>, curr: ValidationError): Validation<T> => {
     if (curr.path && acc[curr.path]) {
       return {
         ...acc,
