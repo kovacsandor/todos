@@ -1,0 +1,14 @@
+name: Test task-service
+
+on:
+  pull_request:
+    paths:
+      - 'task-service/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd task-service && npm ci && npm test

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service-deployment-label
+  template:
+    metadata:
+      labels:
+        app: user-service-deployment-label
+    spec:
+      containers:
+        - name: user-service-container
+          image: andorkovacs/todos-user-service
+          envFrom:
+            - secretRef:
+                name: user-service-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service-deployment-label
+  type: ClusterIP
+  ports:
+    - name: user-service-cluster-ip-port-name
+      protocol: TCP
+      port: 8080
+      targetPort: 8080

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service-database-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service-database-deployment-label
+  template:
+    metadata:
+      labels:
+        app: user-service-database-deployment-label
+    spec:
+      containers:
+        - name: user-service-database-container
+          image: mongo
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service-database
+spec:
+  selector:
+    app: user-service-database-deployment-label
+  type: ClusterIP
+  ports:
+    - name: user-service-database-cluster-ip-port-name
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

@@ -43,7 +43,7 @@ describe('App', () => {
 
   test('renders ErrorBoundary', () => {
     screen.getByText(/ErrorBoundary/i);
-    screen.getByText(/process\.env\.react_app_backend_api_url is undefined/i);
+    screen.getByText(/process\.env\.REACT_APP_ORIGIN is undefined/i);
     screen.getByText(/no error/i);
   });
 

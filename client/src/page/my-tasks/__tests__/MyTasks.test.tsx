@@ -23,10 +23,10 @@ const Page = (
 
 const resolveValue = (response: any) => async (url: string) => {
   return new Promise((resolve) => {
-    if (url === 'REACT_APP_BACKEND_API_URL/api/logged-in-user') {
+    if (url === 'REACT_APP_ORIGIN/api/user-service/logged-in-user') {
       resolve({ data: { payload: { loggedInUser: { name: 'John Doe' } }, type: 'Success' } });
     }
-    if (url === 'REACT_APP_BACKEND_API_URL/api/todos/my-tasks/0') {
+    if (url === 'REACT_APP_ORIGIN/api/task-service/my-tasks/0') {
       resolve(response);
     }
   });

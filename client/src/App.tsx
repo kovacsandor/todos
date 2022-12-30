@@ -7,10 +7,7 @@ import { Router } from 'src/router';
 
 export function App() {
   return (
-    <ErrorBoundary
-      error={!process.env.REACT_APP_BACKEND_API_URL}
-      message='process.env.REACT_APP_BACKEND_API_URL is undefined'
-    >
+    <ErrorBoundary error={!process.env.REACT_APP_ORIGIN} message='process.env.REACT_APP_ORIGIN is undefined'>
       <CssBaseline />
       <QueryClientProvider client={queryClient}>
         <Router />

@@ -2,11 +2,18 @@
   "compilerOptions": {
     "baseUrl": ".",
     "declaration": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
     "outDir": "./dist",
     "paths": {
       "src/*": [
         "src/*"
       ]
-    }
-  }
+    },
+    "target": "ES5"
+  },
+  "exclude": [
+    "dist/**/*",
+    "jest.config.ts"
+  ]
 }

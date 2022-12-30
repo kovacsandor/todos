@@ -9,7 +9,7 @@ export const createTask = async ({
   type,
 }: CreateTask['requestBody']): Promise<CreateTask['response']> => {
   const method: CreateTask['method'] = 'post';
-  const path: CreateTask['path'] = '/api/task';
+  const path: CreateTask['path'] = '/api/task-service/create';
   const url = createUrl(path);
 
   const { data } = await axios[method]<

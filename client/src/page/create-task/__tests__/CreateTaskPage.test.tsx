@@ -36,7 +36,7 @@ jest.mock('axios', () => ({
 
 describe('CreateTaskPage', () => {
   beforeAll(() => {
-    jest.useFakeTimers().setSystemTime(new Date('2022 12 10 12:00'));
+    jest.useFakeTimers().setSystemTime(new Date('2022-12-10T12:00:00.000Z'));
   });
 
   afterAll(() => {
@@ -93,9 +93,9 @@ describe('CreateTaskPage', () => {
 
     await user.click(submit);
 
-    expect(mockPost).toBeCalledWith('REACT_APP_BACKEND_API_URL/api/task', {
+    expect(mockPost).toBeCalledWith('REACT_APP_ORIGIN/api/task-service/create', {
       description: 'Do not forget to invite John Doe',
-      dueDate: '2022-12-15T22:59:59.000Z',
+      dueDate: '2022-12-15T23:59:59.000Z',
       summary: 'Organize the meeting',
       type: 'work',
     });
