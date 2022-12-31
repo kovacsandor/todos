@@ -1,3 +1,4 @@
+export * from 'src/endpoint/CompleteTask';
 export * from 'src/endpoint/CreateTask';
 export * from 'src/endpoint/GetLoggedInUser';
 export * from 'src/endpoint/GetMyTasks';
