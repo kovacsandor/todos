@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Completed, CreateTaskPage, LoginPage, MyTasks, NotFound, SignUpPage, TaskEdit } from 'src/page';
+import { CompletedTasks, CreateTaskPage, LoginPage, MyTasks, NotFound, SignUpPage, TaskEdit } from 'src/page';
 import { Redirect } from 'src/router/Redirect';
 
 export function Router() {
@@ -9,7 +9,7 @@ export function Router() {
         <Route path='/' element={<Redirect redirectFrom={'/'} redirectTo={'/todos/my-tasks'} />}>
           <Route path='todos'>
             <Route path='my-tasks' element={<MyTasks />} />
-            <Route path='completed' element={<Completed />} />
+            <Route path='completed' element={<CompletedTasks />} />
             <Route index element={<NotFound />} />
           </Route>
           <Route path='todo'>

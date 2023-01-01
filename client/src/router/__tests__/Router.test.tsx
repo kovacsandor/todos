@@ -16,7 +16,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('src/page', () => ({
-  Completed: () => <>Page completed</>,
+  CompletedTasks: () => <>CompletedTasks</>,
   CreateTaskPage: () => <>CreateTaskPage</>,
   LoginPage: () => <>Page login</>,
   MyTasks: () => <>Page my tasks</>,
@@ -52,7 +52,7 @@ describe('Router', () => {
       const root = screen.getByText(/path is \/\$/i);
       const todos = within(root).getByText(/path is todos\$/i);
       const path = within(todos).getByText(/path is completed\$/i);
-      within(path).getByText(/element is page completed/i);
+      within(path).getByText(/element is CompletedTasks/i);
     });
 
     test('todo/new', () => {

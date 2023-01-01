@@ -1,4 +1,4 @@
-import { getNextPageParam } from 'src/page/my-tasks/getNextPageParam';
+import { getNextPageParam } from 'src/component/task-list/getNextPageParam';
 
 describe('getNextPageParam', () => {
   test('calls correct api endpoint', async () => {
