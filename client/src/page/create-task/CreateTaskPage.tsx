@@ -1,6 +1,6 @@
 import { Divider } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { Form, Formik } from 'formik';
 import moment from 'moment';
@@ -14,11 +14,11 @@ import { FieldSummary } from 'src/page/create-task/FieldSummary';
 import { FieldType } from 'src/page/create-task/FieldType';
 import { FormikValues } from 'src/page/create-task/FormikValues';
 import { SubmitButton } from 'src/page/create-task/SubmitButton';
-import { queryClient } from 'src/react-query';
 import { QueryKey } from 'src/type';
 import { CreateTask, createTaskValidationSchema, getTimeBeforeTomorrow } from 'todos-shared';
 
 export function CreateTaskPage(): JSX.Element {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { isLoading, mutate, error, data, isError, isSuccess } = useMutation<
     CreateTask['response'],
@@ -31,7 +31,7 @@ export function CreateTaskPage(): JSX.Element {
       queryClient.removeQueries([QueryKey.MyTasks]);
       navigate('/');
     }
-  }, [data, isSuccess, navigate]);
+  }, [data, isSuccess, navigate, queryClient]);
 
   const initialValues: FormikValues = {
     description: '',

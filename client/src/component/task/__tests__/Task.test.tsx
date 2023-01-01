@@ -1,4 +1,5 @@
 import { ListItemProps, ListItemTextProps } from '@mui/material';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, screen, within } from '@testing-library/react';
 import { Task } from 'src/component/task';
 import { ITaskAvatarProps } from 'src/component/task/ITaskAvatarProps';
@@ -41,15 +42,21 @@ jest.mock(
 );
 
 describe('Task', () => {
-  const task: Pick<Shared.Task, 'dueDate' | 'type' | 'summary'> = {
-    dueDate: 123456,
+  const task: Pick<Shared.Task, 'type' | 'summary' | 'id' | 'dueDate' | 'status'> = {
+    dueDate: new Date(),
+    id: 'id',
+    status: 'todo',
     summary: 'summary',
     type: 'private',
   };
   beforeEach(() => {
     mockFormat.mockReturnValueOnce('formatted');
     mockMoment.mockReturnValueOnce({ format: (formatString: string) => mockFormat(formatString) });
-    render(<Task task={task} />);
+    render(
+      <QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}>
+        <Task task={task} />
+      </QueryClientProvider>,
+    );
   });
 
   test('structure is correct', () => {
