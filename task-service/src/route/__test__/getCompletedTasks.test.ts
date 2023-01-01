@@ -1,14 +1,28 @@
 import { describe, expect, test } from '@jest/globals';
 import { Types } from 'mongoose';
 import { app } from 'src/app';
-import { CreateTask, GetMyTasks, getPayload, getTimeBeforeTomorrow, StatusCode } from 'todos-shared';
+import {
+  CompleteTask,
+  CreateTask,
+  GetCompletedTasks,
+  getPayload,
+  getTimeBeforeTomorrow,
+  StatusCode,
+} from 'todos-shared';
 import { getJWT, SupertestResponse, testEndpoint } from 'todos-shared-microservices';
 
-describe('getMyTasks', () => {
+describe('getCompletedTasks', () => {
   const requestJaneDoe: CreateTask['requestBody'] = {
     description: 'Do not forget to invite Jane Doe',
     dueDate: getTimeBeforeTomorrow().toISOString(),
     summary: 'Organize a meeting for Monday',
+    type: 'work',
+  };
+
+  const requestJanetDoe: CreateTask['requestBody'] = {
+    description: 'Do not forget to invite Janet Doe',
+    dueDate: getTimeBeforeTomorrow().toISOString(),
+    summary: 'Organize a meeting for Tuesday',
     type: 'work',
   };
 
@@ -26,12 +40,28 @@ describe('getMyTasks', () => {
       { authorization },
     );
 
-  const GetMyTasks = (authorization: string, from: string): Promise<SupertestResponse<GetMyTasks['response']>> =>
-    testEndpoint<GetMyTasks>(
+  const completeTask = (authorization: string, taskId: string): Promise<SupertestResponse<CompleteTask['response']>> =>
+    testEndpoint<CompleteTask>(
+      app,
+      {
+        method: 'put',
+        path: '/api/task-service/complete/:taskId',
+        params: {
+          taskId,
+        },
+      },
+      { authorization },
+    );
+
+  const getCompletedTasks = (
+    authorization: string,
+    from: string,
+  ): Promise<SupertestResponse<GetCompletedTasks['response']>> =>
+    testEndpoint<GetCompletedTasks>(
       app,
       {
         method: 'get',
-        path: '/api/task-service/my-tasks/:from',
+        path: '/api/task-service/completed-tasks/:from',
         params: {
           from,
         },
@@ -43,9 +73,12 @@ describe('getMyTasks', () => {
     const userId = new Types.ObjectId();
     const authorization = getJWT(userId.toString());
 
-    await createTask(authorization, requestJaneDoe);
+    const created = await createTask(authorization, requestJaneDoe);
+    const createdId = getPayload(created.body).task.id;
 
-    const response: SupertestResponse<GetMyTasks['response']> = await GetMyTasks(authorization, '0');
+    await completeTask(authorization, createdId);
+
+    const response: SupertestResponse<GetCompletedTasks['response']> = await getCompletedTasks(authorization, '0');
     const payload = getPayload(response.body);
     const [task] = payload.tasks;
 
@@ -56,7 +89,7 @@ describe('getMyTasks', () => {
     expect(task.description).toBe(requestJaneDoe.description);
     expect(task.dueDate).toBe(requestJaneDoe.dueDate);
     expect(task.id).toBeDefined();
-    expect(task.status).toBe('todo');
+    expect(task.status).toBe('completed');
     expect(task.summary).toBe(requestJaneDoe.summary);
     expect(task.type).toBe(requestJaneDoe.type);
   });
@@ -65,17 +98,15 @@ describe('getMyTasks', () => {
     const userId = new Types.ObjectId();
     const authorization = getJWT(userId.toString());
 
-    const requestJanetDoe: CreateTask['requestBody'] = {
-      description: 'Do not forget to invite Janet Doe',
-      dueDate: getTimeBeforeTomorrow().toISOString(),
-      summary: 'Organize a meeting for Tuesday',
-      type: 'work',
-    };
+    const createdJane = await createTask(authorization, requestJaneDoe);
+    const createdJaneId = getPayload(createdJane.body).task.id;
+    const createdJanet = await createTask(authorization, requestJanetDoe);
+    const createdJanetId = getPayload(createdJanet.body).task.id;
 
-    await createTask(authorization, requestJaneDoe);
-    await createTask(authorization, requestJanetDoe);
+    await completeTask(authorization, createdJaneId);
+    await completeTask(authorization, createdJanetId);
 
-    const response: SupertestResponse<GetMyTasks['response']> = await GetMyTasks(authorization, '1');
+    const response: SupertestResponse<GetCompletedTasks['response']> = await getCompletedTasks(authorization, '1');
     const payload = getPayload(response.body);
     const [task] = payload.tasks;
 

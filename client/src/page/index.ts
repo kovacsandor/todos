@@ -1,4 +1,4 @@
-export * from 'src/page/Completed';
+export * from 'src/page/completed-tasks';
 export * from 'src/page/create-task';
 export * from 'src/page/login';
 export * from 'src/page/my-tasks';

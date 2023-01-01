@@ -35,7 +35,7 @@ export function TaskMenu({ task }: ITaskMenuProps): JSX.Element {
       queryClient.refetchQueries([QueryKey.MyTasks]);
       onClose();
     }
-  }, [data, isSuccess]);
+  }, [data, isSuccess, queryClient]);
 
   return task.status === 'todo' ? (
     <>
