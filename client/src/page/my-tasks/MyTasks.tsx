@@ -24,8 +24,8 @@ export function MyTasks(): JSX.Element {
   );
 
   const isLoadingStateVisible = useMemo(
-    (): boolean => isLoading || isFetchingNextPage,
-    [isFetchingNextPage, isLoading],
+    (): boolean => isLoading || isFetchingNextPage || isRefetching,
+    [isFetchingNextPage, isLoading, isRefetching],
   );
 
   const isLoadMoreButtonVisible = useMemo(
@@ -34,14 +34,18 @@ export function MyTasks(): JSX.Element {
   );
 
   const isNoMoreTasksVisible = useMemo(
-    (): boolean => isSuccess && !!data.pages[0].length && !hasNextPage,
-    [hasNextPage, isSuccess, data],
+    (): boolean => !isLoadingStateVisible && isSuccess && !!data.pages[0].length && !hasNextPage,
+    [hasNextPage, isSuccess, data, isLoadingStateVisible],
   );
   const isNoTasksFoundVisible = useMemo(
-    (): boolean => isSuccess && data.pages.length === 1 && !data.pages[0].length,
-    [data, isSuccess],
+    (): boolean => !isLoadingStateVisible && isSuccess && data.pages.length === 1 && !data.pages[0].length,
+    [data, isSuccess, isLoadingStateVisible],
   );
   const isTaskListVisible = useMemo((): boolean => !!data?.pages[0].length, [data]);
+  const isDividerListVisible = useMemo(
+    (): boolean => isTaskListVisible && !isLoadingStateVisible,
+    [isTaskListVisible, isLoadingStateVisible],
+  );
 
   const onLoadMoreClicked = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
@@ -68,7 +72,7 @@ export function MyTasks(): JSX.Element {
     <ProtectedResource>
       <PageFrame title='My Tasks'>
         {isTaskListVisible && <TaskList tasks={tasks} />}
-        {isTaskListVisible && <Divider />}
+        {isDividerListVisible && <Divider />}
         {isNoTasksFoundVisible && <TaskListMessage text='No tasks found' />}
         {isNoMoreTasksVisible && <TaskListMessage text='No more tasks' />}
         {isLoadingStateVisible && <LoadingButton loading data-testid='loading-state' />}
