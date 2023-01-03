@@ -1,8 +1,9 @@
 import { hash } from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
+import { sendMessage } from 'src/kafka';
 import { userModel } from 'src/model';
 import { SignUp, signUpValidationSchema, StatusCode, validateFields } from 'todos-shared';
-import { CustomValidationError, getJWT } from 'todos-shared-microservices';
+import { CustomValidationError, getJWT, KafkaTopic, UserSignedUp } from 'todos-shared-microservices';
 
 const method: SignUp['method'] = 'post';
 const path: SignUp['path'] = '/api/user-service/sign-up';
@@ -40,7 +41,20 @@ signUp[method](
       })
       .save();
 
-    const token = getJWT(document.toJSON().id);
+    const user = document.toJSON();
+
+    await sendMessage<UserSignedUp>({
+      message: {
+        user: {
+          email: user.email,
+          name: user.name,
+        },
+      },
+      messageKey: user.id,
+      topic: KafkaTopic.UserSignedUp,
+    });
+
+    const token = getJWT(user.id);
 
     res.status(StatusCode.Created).send({
       payload: { token },

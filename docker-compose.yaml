@@ -8,13 +8,16 @@ services:
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
       - KAFKA_BROKER_ID=1
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@127.0.0.1:9093
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_ENABLE_KRAFT=yes
+    volumes:
+      - './data/kafka:/bitnami'
 
   nginx-proxy:
     container_name: nginx-proxy
@@ -40,8 +43,28 @@ services:
     volumes:
       - ./client/src/:/usr/src/app/src/
     depends_on:
+      - notification-service
       - task-service
       - user-service
+
+  notification-service:
+    container_name: notification-service
+    image: todos-notification-service
+    build:
+      context: notification-service
+      dockerfile: ./Dockerfile.dev
+    expose:
+      - '8082'
+    environment:
+      - VIRTUAL_HOST=todos.local.com
+      - VIRTUAL_PATH=/api/notification-service
+    env_file:
+      - ./notification-service/.env
+    volumes:
+      - ./notification-service/src/:/usr/src/app/src/
+    depends_on:
+      - kafka
+      - nginx-proxy
 
   task-service:
     container_name: task-service

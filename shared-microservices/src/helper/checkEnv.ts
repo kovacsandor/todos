@@ -1,4 +1,4 @@
-export const checkEnv = (envKeys: { readonly [K in keyof typeof process.env]: boolean | undefined }): void => {
+export const checkEnv = <T>(envKeys: { readonly [K in keyof T]: boolean | undefined }): void => {
   const unsetEnvKeys: readonly string[] = Object.keys(envKeys).reduce(
     (acc: readonly string[], curr: string): readonly string[] => {
       if (!!envKeys[curr] && !process.env[curr]) {

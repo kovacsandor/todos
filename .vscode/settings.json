@@ -6,10 +6,12 @@
     "doctl",
     "flexgrow",
     "formik",
+    "kafkajs",
     "kubeconfig",
     "overridable",
     "postbuild",
     "reduxjs",
+    "sendgrid",
     "tanstack",
     "todos",
     "tscpaths"

@@ -1,9 +1,13 @@
-import { afterAll, beforeAll, beforeEach } from '@jest/globals';
+import { afterAll, beforeAll, beforeEach, jest } from '@jest/globals';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { EnvironmentVariables } from 'todos-shared-microservices';
+import { mockKafkaSend } from 'src/helper';
+import { EnvironmentVariables, mockKafka } from 'todos-shared-microservices';
 
 let mongoServer: MongoMemoryServer;
+
+const kafka = mockKafka(jest);
+kafka(mockKafkaSend);
 
 beforeAll(async () => {
   const environmentVariables: EnvironmentVariables = {

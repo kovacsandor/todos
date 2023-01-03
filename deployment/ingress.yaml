@@ -11,6 +11,13 @@ spec:
     - host: 'todos.andorkovacs.online'
       http:
         paths:
+          - path: '/api/notification-service'
+            pathType: Prefix
+            backend:
+              service:
+                name: notification-service
+                port:
+                  number: 8082
           - path: '/api/task-service'
             pathType: Prefix
             backend:

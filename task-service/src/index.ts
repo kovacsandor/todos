@@ -5,7 +5,7 @@ import { checkEnv } from 'todos-shared-microservices';
 const port: number = 8081;
 
 app.listen(port, async (): Promise<void> => {
-  checkEnv({
+  checkEnv<typeof process.env>({
     JWT_SECRET: true,
   });
 

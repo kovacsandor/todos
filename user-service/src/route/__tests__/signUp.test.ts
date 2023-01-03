@@ -1,8 +1,9 @@
 import { describe, expect, test } from '@jest/globals';
 import { app } from 'src/app';
+import { mockKafkaSend } from 'src/helper';
 import { userModel } from 'src/model';
 import { getPayload, getValidationError, SignUp, StatusCode } from 'todos-shared';
-import { SupertestResponse, testEndpoint } from 'todos-shared-microservices';
+import { KafkaTopic, SupertestResponse, testEndpoint } from 'todos-shared-microservices';
 
 describe('signUp', () => {
   test('user can sign up', async () => {
@@ -34,6 +35,21 @@ describe('signUp', () => {
     expect(user.name).toBe(requestBody.name);
     expect(user.password).toBeDefined();
     expect(user.password).not.toBe(requestBody.password);
+
+    expect(mockKafkaSend).toBeCalledWith({
+      topic: KafkaTopic.UserSignedUp,
+      messages: [
+        {
+          key: user.id,
+          value: JSON.stringify({
+            user: {
+              email: requestBody.email,
+              name: requestBody.name,
+            },
+          }),
+        },
+      ],
+    });
   });
 
   test('user needs to send valid data', async () => {
