@@ -21,7 +21,9 @@ spec:
             - name: KAFKA_BROKER_ID
               value: '1'
             - name: KAFKA_CFG_ADVERTISED_LISTENERS
-              value: 'PLAINTEXT://localhost:9092'
+              value: 'PLAINTEXT://kafka:9092'
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: 'true'
             - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
               value: 'CONTROLLER'
             - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS

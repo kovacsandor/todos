@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Log in to DigitalOcean and set the cluster context to k8s-test-cluster
+      # Log in to DigitalOcean and set the cluster context to todos-cluster
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_PERSONAL_ACCESS_TOKEN }}

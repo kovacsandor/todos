@@ -5,7 +5,7 @@
 .env
 
 ```bash
-JWT_SECRET= ...
+JWT_SECRET= ... # should be JWT_SECRET
 ```
 
 ## Provide environment variables for running the app locally in Kubernetes
@@ -19,5 +19,5 @@ metadata:
   name: user-service-secret
 type: Opaque
 stringData:
-  JWT_SECRET: ...
+  JWT_SECRET: ... # should be JWT_SECRET
 ```

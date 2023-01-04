@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service-deployment-label
+  template:
+    metadata:
+      labels:
+        app: notification-service-deployment-label
+    spec:
+      containers:
+        - name: notification-service-container
+          image: andorkovacs/todos-notification-service
+          envFrom:
+            - secretRef:
+                name: notification-service-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+spec:
+  selector:
+    app: notification-service-deployment-label
+  type: ClusterIP
+  ports:
+    - name: notification-service-cluster-ip-port-name
+      protocol: TCP
+      port: 8082
+      targetPort: 8082

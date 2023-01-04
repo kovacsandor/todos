@@ -4,6 +4,8 @@
 
 ### Map application host to localhost
 
+> Mandatory for all methods to start up the app locally.
+
 In your `/etc/host` file map `todos.local.com` to your local ip address. This is needed if you wish to work on multiple projects locally.
 
 ```bash
@@ -13,6 +15,8 @@ In your `/etc/host` file map `todos.local.com` to your local ip address. This is
 Once the application is running visit the app in the browser <http://todos.local.com/>
 
 ### Starting up the app in Docker Compose
+
+> The _easiest_ and recommended method to start up the app locally.
 
 Start application in development mode with live code refresh and live reload in the browser.
 
@@ -26,6 +30,11 @@ If you make changes outside of the src folder you might want to rebuild the imag
 #### Environment variables for Docker Compose
 
 Make sure you provided the `.env` file for all microservices.
+
+- [client/](./client/README.md)
+- [notification-service/](./notification-service/README.md)
+- [task-service/](./task-service/README.md)
+- [user-service/](./user-service/README.md)
 
 #### Accessing the databases running in Docker Compose locally
 
@@ -61,6 +70,7 @@ cd ~/Projects/todos/
 # react app environment variables need to be present at build time
 build_with_args="docker build -t andorkovacs/todos-client-service -f ./client/Dockerfile $(cat ./client/.env | while read -r line; do out+="--build-arg \"$line\" "; done; echo $out;out="")./client/"
 eval "$build_with_args"
+docker build -t andorkovacs/todos-notification-service -f ./notification-service/Dockerfile ./notification-service/
 docker build -t andorkovacs/todos-task-service -f ./task-service/Dockerfile ./task-service/
 docker build -t andorkovacs/todos-user-service -f ./user-service/Dockerfile ./user-service/
 ```
@@ -71,6 +81,7 @@ All images need to be pushed to Docker Hub.
 
 ```bash
 docker push andorkovacs/todos-client-service
+docker push andorkovacs/todos-notification-service
 docker push andorkovacs/todos-task-service
 docker push andorkovacs/todos-user-service
 ```
@@ -83,6 +94,7 @@ Make sure you provided the `secret.yaml` file for all microservices.
 
 ```bash
 # client environment variables were set at image build time
+kubectl apply -f ./notification-service/secret.yaml
 kubectl apply -f ./task-service/secret.yaml
 kubectl apply -f ./user-service/secret.yaml
 ```
@@ -94,6 +106,7 @@ The deployments will create pods running containers made based on the docker ima
 ```bash
 kubectl apply -f ./deployment/client-service.yaml
 kubectl apply -f ./deployment/kafka.yaml
+kubectl apply -f ./deployment/notification-service.yaml
 kubectl apply -f ./deployment/task-service-database.yaml
 kubectl apply -f ./deployment/task-service.yaml
 kubectl apply -f ./deployment/user-service-database.yaml
@@ -120,6 +133,7 @@ kubectl apply -f ingress.dev.yaml
 
 ```bash
 kubectl rollout restart deployment client-service-deployment
+kubectl rollout restart deployment notification-service-deployment
 kubectl rollout restart deployment task-service-database-deployment
 kubectl rollout restart deployment task-service-deployment
 kubectl rollout restart deployment user-service-database-deployment
@@ -157,12 +171,14 @@ You can access the database with the connection string of `mongodb://localhost:2
 ```bash
 kubectl delete deployment client-service-deployment
 kubectl delete deployment kafka-deployment
+kubectl delete deployment notification-service-deployment
 kubectl delete deployment task-service-database-deployment
 kubectl delete deployment task-service-deployment
 kubectl delete deployment user-service-database-deployment
 kubectl delete deployment user-service-deployment
 kubectl delete service client-service
 kubectl delete service kafka
+kubectl delete service notification-service
 kubectl delete service task-service-database
 kubectl delete service task-service
 kubectl delete service user-service-database
@@ -191,6 +207,8 @@ DOCKER_USERNAME
 JWT_SECRET
 REACT_APP_ORIGIN
 REACT_APP_WEBSITE_NAME
+SENDGRID_API_KEY
+SENDGRID_FROM
 ```
 
 ### Visit the app

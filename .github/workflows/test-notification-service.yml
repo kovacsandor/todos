@@ -1,0 +1,14 @@
+name: Test notification-service
+
+on:
+  pull_request:
+    paths:
+      - 'notification-service/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: cd notification-service && npm ci && npm test

@@ -17,6 +17,6 @@ Tests break above the following versions of these packages:
 .env
 
 ```bash
-REACT_APP_ORIGIN= ...
-REACT_APP_WEBSITE_NAME= ...
+REACT_APP_ORIGIN= ...       # should be http://todos.local.com
+REACT_APP_WEBSITE_NAME= ... # should be Todos
 ```

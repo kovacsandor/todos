@@ -18,9 +18,11 @@ describe('createTaskValidationSchema', () => {
     expect(error).toBeUndefined();
   });
 
+  const earlierToday = new Date(new Date().toDateString()).toISOString();
+
   test('value gets rejected', async () => {
     const value = {
-      dueDate: new Date().toISOString(),
+      dueDate: earlierToday,
       summary: 'ab',
       type: 'fun',
     };

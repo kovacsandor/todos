@@ -27,7 +27,7 @@ jobs:
           REACT_APP_WEBSITE_NAME: ${{ secrets.REACT_APP_WEBSITE_NAME }}
       - run: docker push andorkovacs/todos-client-service
 
-      # Log in to DigitalOcean and set the cluster context to k8s-test-cluster
+      # Log in to DigitalOcean and set the cluster context to todos-cluster
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_PERSONAL_ACCESS_TOKEN }}

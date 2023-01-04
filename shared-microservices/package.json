@@ -1,6 +1,6 @@
 {
   "name": "todos-shared-microservices",
-  "version": "0.0.29",
+  "version": "0.0.45",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -13,8 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "jwt-simple": "0.5.6",
+    "kafkajs": "2.2.3",
     "supertest": "6.3.3",
-    "todos-shared": "0.0.33",
+    "todos-shared": "0.0.36",
     "yup": "0.32.11"
   },
   "devDependencies": {
