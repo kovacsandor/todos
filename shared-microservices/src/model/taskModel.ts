@@ -1,6 +1,6 @@
 import { Document, model, Model, ObjectId, Schema, Types } from 'mongoose';
+import { PlainObject } from 'src/type/PlainObject';
 import { Task } from 'todos-shared';
-import { PlainObject } from 'todos-shared-microservices';
 
 type CreateDocumentParams = Pick<Task, 'description' | 'dueDate' | 'owner' | 'summary' | 'type'>;
 
@@ -44,6 +44,7 @@ const taskSchema = new Schema(
     },
   },
   {
+    collection: 'Task',
     toJSON: {
       transform(doc: TaskDocument, { __v, _id, owner, ...rest }: PlainObject<Task>): Task {
         return {

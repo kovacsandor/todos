@@ -39,7 +39,7 @@ export function TaskMenu({ task }: ITaskMenuProps): JSX.Element {
 
   return task.status === 'todo' ? (
     <>
-      <IconButton disabled={disabled} onClick={onClick}>
+      <IconButton aria-label='more' disabled={disabled} onClick={onClick}>
         <MoreVert />
       </IconButton>
       <Menu

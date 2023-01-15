@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { taskModel } from 'src/model';
 import { GetMyTasks, StatusCode, Task, TaskListItem } from 'todos-shared';
-import { AuthorizedLocals, authorizeUser, HttpError, SortArgument } from 'todos-shared-microservices';
+import { AuthorizedLocals, authorizeUser, HttpError, SortArgument, taskModel } from 'todos-shared-microservices';
 
 const method: GetMyTasks['method'] = 'get';
 const path: GetMyTasks['path'] = '/api/task-service/my-tasks/:from';

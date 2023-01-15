@@ -1,0 +1,21 @@
+{
+  "name": "todos",
+  "version": "1.0.0",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kovacsandor/todos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kovacsandor/todos/issues"
+  },
+  "homepage": "https://github.com/kovacsandor/todos#readme",
+  "devDependencies": {
+    "husky": "8.0.3"
+  }
+}

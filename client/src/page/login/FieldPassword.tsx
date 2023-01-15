@@ -21,9 +21,10 @@ export function FieldPassword({ error, isLoading }: Props): JSX.Element {
   return (
     <FormikTextField
       disabled={isLoading}
-      onResponseError={onResponseError}
       label='Password'
       name='password'
+      onResponseError={onResponseError}
+      placeholder='Password'
       required
       size='small'
       type='password'

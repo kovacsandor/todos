@@ -1,6 +1,6 @@
 {
   "name": "todos-shared-microservices",
-  "version": "0.0.45",
+  "version": "0.0.50",
   "description": "",
   "main": "./dist/index.js",
   "scripts": {
@@ -12,6 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "4.17.15",
+    "@types/mongoose": "5.11.97",
+    "express": "4.18.2",
     "jwt-simple": "0.5.6",
     "kafkajs": "2.2.3",
     "supertest": "6.3.3",
@@ -19,12 +22,9 @@
     "yup": "0.32.11"
   },
   "devDependencies": {
-    "@types/express": "4.17.15",
     "@types/jest": "29.2.4",
-    "@types/mongoose": "5.11.97",
     "@types/node": "18.11.17",
     "@types/supertest": "2.0.12",
-    "express": "4.18.2",
     "mongoose": "6.8.1",
     "ts-jest": "29.0.3",
     "ts-node": "10.9.1",

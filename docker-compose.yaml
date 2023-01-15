@@ -17,7 +17,7 @@ services:
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_ENABLE_KRAFT=yes
     volumes:
-      - './data/kafka:/bitnami'
+      - './${DATA_PATH:-data}/kafka:/bitnami'
 
   nginx-proxy:
     container_name: nginx-proxy
@@ -88,7 +88,7 @@ services:
     ports:
       - '27081:27017'
     volumes:
-      - ./data/task-service:/data/db
+      - ./${DATA_PATH:-data}/task-service:/data/db
 
   user-service:
     container_name: user-service
@@ -116,4 +116,4 @@ services:
     ports:
       - '27080:27017'
     volumes:
-      - ./data/user-service:/data/db
+      - ./${DATA_PATH:-data}/user-service:/data/db

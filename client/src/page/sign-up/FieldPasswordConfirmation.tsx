@@ -21,9 +21,10 @@ export function FieldPasswordConfirmation({ error, isLoading }: Props): JSX.Elem
   return (
     <FormikTextField
       disabled={isLoading}
-      onResponseError={onResponseError}
       label='Password confirmation'
       name='passwordConfirmation'
+      onResponseError={onResponseError}
+      placeholder='Password confirmation'
       required
       size='small'
       type='password'

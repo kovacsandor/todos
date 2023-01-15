@@ -1,9 +1,8 @@
 import { hash } from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
 import { sendMessage } from 'src/kafka';
-import { userModel } from 'src/model';
 import { SignUp, signUpValidationSchema, StatusCode, validateFields } from 'todos-shared';
-import { CustomValidationError, getJWT, KafkaTopic, UserSignedUp } from 'todos-shared-microservices';
+import { CustomValidationError, getJWT, KafkaTopic, userModel, UserSignedUp } from 'todos-shared-microservices';
 
 const method: SignUp['method'] = 'post';
 const path: SignUp['path'] = '/api/user-service/sign-up';
