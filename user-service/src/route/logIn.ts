@@ -1,8 +1,7 @@
 import { compare } from 'bcrypt';
 import { NextFunction, Request, Response, Router } from 'express';
-import { userModel } from 'src/model';
 import { Login, loginValidationSchema, StatusCode, validateFields } from 'todos-shared';
-import { CustomValidationError, getJWT } from 'todos-shared-microservices';
+import { CustomValidationError, getJWT, userModel } from 'todos-shared-microservices';
 
 const method: Login['method'] = 'post';
 const path: Login['path'] = '/api/user-service/login';

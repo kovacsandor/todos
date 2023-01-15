@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { userModel } from 'src/model';
 import { GetLoggedInUser, StatusCode, User } from 'todos-shared';
-import { AuthorizedLocals, authorizeUser, HttpError } from 'todos-shared-microservices';
+import { AuthorizedLocals, authorizeUser, HttpError, userModel } from 'todos-shared-microservices';
 
 const method: GetLoggedInUser['method'] = 'get';
 const path: GetLoggedInUser['path'] = '/api/user-service/logged-in-user';

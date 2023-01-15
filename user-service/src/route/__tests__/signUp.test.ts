@@ -1,9 +1,8 @@
 import { describe, expect, test } from '@jest/globals';
 import { app } from 'src/app';
 import { mockKafkaSend } from 'src/helper';
-import { userModel } from 'src/model';
 import { getPayload, getValidationError, SignUp, StatusCode } from 'todos-shared';
-import { KafkaTopic, SupertestResponse, testEndpoint } from 'todos-shared-microservices';
+import { KafkaTopic, SupertestResponse, testEndpoint, userModel } from 'todos-shared-microservices';
 
 describe('signUp', () => {
   test('user can sign up', async () => {

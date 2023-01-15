@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { taskModel } from 'src/model';
 import { CreateTask, createTaskValidationSchema, StatusCode, validateFields } from 'todos-shared';
-import { AuthorizedLocals, authorizeUser } from 'todos-shared-microservices';
+import { AuthorizedLocals, authorizeUser, taskModel } from 'todos-shared-microservices';
 
 const method: CreateTask['method'] = 'post';
 const path: CreateTask['path'] = '/api/task-service/create';

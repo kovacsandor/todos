@@ -1,6 +1,6 @@
 import { Document, model, Model, ObjectId, Schema } from 'mongoose';
+import { PlainObject } from 'src/type/PlainObject';
 import { User } from 'todos-shared';
-import { PlainObject } from 'todos-shared-microservices';
 
 type CreateDocumentParams = Omit<User, 'id'>;
 
@@ -26,6 +26,7 @@ const userSchema = new Schema(
     },
   },
   {
+    collection: 'User',
     toJSON: {
       transform(doc: UserDocument, { __v, _id, ...rest }: PlainObject<User>): User {
         return {

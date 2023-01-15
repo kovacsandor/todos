@@ -103,4 +103,10 @@ dist
 # TernJS port file
 .tern-port
 
+# Deployment
+secret.yaml
+
+# Development
 data
+screenshots
+videos

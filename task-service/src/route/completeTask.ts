@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { taskModel } from 'src/model';
 import { CompleteTask, StatusCode, Task } from 'todos-shared';
-import { AuthorizedLocals, authorizeUser, HttpError } from 'todos-shared-microservices';
+import { AuthorizedLocals, authorizeUser, HttpError, taskModel } from 'todos-shared-microservices';
 
 const method: CompleteTask['method'] = 'put';
 const path: CompleteTask['path'] = '/api/task-service/complete/:taskId';
