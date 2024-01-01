@@ -186,31 +186,8 @@ kubectl delete service user-service
 kubectl delete all --all -n ingress-nginx
 ```
 
-## Deploying the app on DigitalOcean
+## GitHub actions
 
 ### Running tests
 
 If you open a pull request all the tests of the changes microservices will run.
-
-### Deployment
-
-If you merge a pull request to master branch the microservices related to the change will be deployed.
-
-### Environment variables
-
-If you add new environment variable, first you have to add the value as a _secret_ to GitHub. Then you can modify the adequate workflow file and refer to the secret's value. Add the following variables as secret to GitHub
-
-```bash
-DIGITALOCEAN_PERSONAL_ACCESS_TOKEN
-DOCKER_PASSWORD
-DOCKER_USERNAME
-JWT_SECRET
-REACT_APP_ORIGIN
-REACT_APP_WEBSITE_NAME
-SENDGRID_API_KEY
-SENDGRID_FROM
-```
-
-### Visit the app
-
-[todos.andorkovacs.online](http://todos.andorkovacs.online/)
